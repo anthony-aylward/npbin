@@ -125,7 +125,7 @@ npbin_preprocess_file <- function(file_path, minimum_coverage = 5) {
   data_frame <- read.table(file_path, stringsAsFactors=FALSE)
   
   if (!(TRUE %in% lapply(data_frame, is.integer))) {
-    data_frame <- read.table(args[[1]], header=TRUE)
+    data_frame <- read.table(file_path, header=TRUE)
     header_indices <- get_header_indices(names(data_frame))
   }
   
