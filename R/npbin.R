@@ -388,7 +388,7 @@ estNull1  <- function(
 #' @param prep Info prepared by estNull1
 #' @param init init
 #' @param iter.max Maximum number of iterations for EM algorithm
-#' @param err.max
+#' @param err.max err.max
 #' @param algorithm Numerical library to use
 #' @param pseq pseq
 #' @param lb Lower bounds
@@ -470,7 +470,7 @@ estNull2 <- function(
 #' @param prep Info prepared by estNull1
 #' @param init init
 #' @param iter.max Maximum number of iterations for EM algorithm
-#' @param err.max
+#' @param err.max err.max
 #' @param algoritm Numerical library to use
 #' @param pseq pseq
 #' @param lb Lower bounds
@@ -543,7 +543,7 @@ rank2nhit <- function(r, id) {sapply(r, function(y) sum((r <= y) & id))}
 #' @param pct0 pct0
 #' @param init init
 #' @param iter.max Maximum number of iterations
-#' @param err.max
+#' @param err.max err.max
 #' @param lb.opt Lower bound
 #' @param ub.opt Upper bound
 #' @return List describing optimized model
