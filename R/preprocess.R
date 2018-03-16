@@ -90,13 +90,15 @@ preprocess_counts <- function(
 #'
 #' @param data_frame A data frame containing required fields for NPBin analysis
 #' @return A data frame formatted for NPBin analysis
-preprocess_file <- function(data_frame) {
+#' @export
+preprocess_file <- function(file_path) {
   header_indices <- list(
     chr_index = 1,
     location_index = 2,
     total_index = 3,
     ref_count_index = 4
   )
+  data_frame <- read.table(file_path, stringsAsFactors=FALSE)
   
   if (!(TRUE %in% lapply(data_frame, is.integer))) {
     data_frame <- read.table(args[[1]], header=TRUE)
