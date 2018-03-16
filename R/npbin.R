@@ -148,8 +148,8 @@ bsplfun.updt <- function(ii, bspl) {
 #' Integration over one spline basis function
 #'
 #' @param bk Pair of points
-#' @param x 
-#' @param m 
+#' @param x x
+#' @param m m
 #' @param cf Coefficient
 iBiBsFun <- function(bk, x, m, cf) {
   k <- length(cf)
