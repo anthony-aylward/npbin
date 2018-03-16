@@ -9,6 +9,7 @@
 
 # Imports ----------------------------------------------------------------------
 
+#' @import data.table
 #' @import parallel
 #' @import nloptr
 #' @import VGAM
@@ -220,6 +221,7 @@ getDesignMtx <- function(bs, x, m, ncores = 1) {
 #' @param err.max Max error for the EM algorithm
 #' @param iter.max Max number of iterations
 #' @return A list giving model details
+#' @export
 emBinBspl <- function(
   x,
   m,
@@ -474,7 +476,8 @@ estNull2 <- function(
 #' @param pseq pseq
 #' @param lb Lower bounds
 #' @param ub Upper bounds
-#' @return mod 
+#' @return mod
+#' @export
 estNull  <- function(
   x,
   m,
@@ -511,6 +514,7 @@ estNull  <- function(
 #'
 #' @param locfdr Local FDR value
 #' @return FDR value
+#' @export
 locfdr2FDR <- function(locfdr) {
   n <- length(locfdr)
   sapply(1:n, function(ii) mean(locfdr[locfdr <= locfdr[ii]]))
@@ -525,6 +529,61 @@ locfdr2FDR <- function(locfdr) {
 #' @param id id
 #' @return vector indicating discoveries
 rank2nhit <- function(r, id) {sapply(r, function(y) sum((r <= y) & id))}
+
+#' @title NPBin
+#'
+#' @details
+#' Perform an NPBin analysis
+#'
+#' @param dt.ct Data table containing allele counts
+#' @param n_breaks Number of spline breaks
+#' @param spline_order Spline order
+#' @param pi_init Initial weights
+#' @param n_cores Number of cores to use
+#' @return Data table containing model information
+#' @export
+npbin <- function(dt.ct, n_breaks, spline_order, pi_init, n_cores) {
+  n <- nrow(dt.ct)
+  breaks <- seq(0, 1, length.out = n_breaks)
+  
+  # estimate the overall model
+  overall_model_estimate <- emBinBspl(
+    dt.ct[, xm],
+    dt.ct[, m],
+    breaks = breaks,
+    k = spline_order,
+    pi.init = pi_init,
+    ncores = n_cores,
+    err.max = 1e-3,
+    iter.max = 200
+  )  
+
+  # estimate the null model
+  null_model_estimate <- estNull(
+    dt.ct[, xm],
+    dt.ct[, m],
+    overall_model_estimate,
+    init = NULL,
+    iter.max = 200,
+    ncores = n_cores,
+    ub = rep(log(1e4), 2),
+    err.max = 1e-4
+  )
+  
+  dt.ct[,
+    fnp := null_model_estimate[["f"]]
+  ][,
+    f0np := null_model_estimate[["f0"]]
+  ][,
+    locfdrnp := null_model_estimate[["locfdr"]]
+  ][,
+    fdrnp := locfdr2FDR(locfdrnp)
+  ][,
+    ranknp := rank(locfdrnp, ties.method = "max")
+  ]
+  
+  dt.ct
+}
 
 
 
@@ -546,6 +605,7 @@ rank2nhit <- function(r, id) {sapply(r, function(y) sum((r <= y) & id))}
 #' @param lb.opt Lower bound
 #' @param ub.opt Upper bound
 #' @return List describing optimized model
+#' @export
 betaTrim_mle <- function(
   x,
   m,
@@ -617,11 +677,12 @@ betaTrim_mle <- function(
 #' @param p p
 #' @param breaks breaks
 #' @param k Spline order
-#' @param pi.init pi.init
+#' @param pi.init Initial weights
 #' @param ncores Number of cores to use
 #' @param err.max err.max
 #' @param iter.max Max iterations
 #' @return List describing optimized model
+#' @export
 emBspl <- function(
   x,
   m,
@@ -701,7 +762,7 @@ emBspl <- function(
 #' @param m m
 #' @param p p
 #' @param breaks breaks
-#' @param pi.init pi.init
+#' @param pi.init Initial weights
 #' @param pct0 pct0
 #' @param init init
 #' @param iter.max Max iterations
@@ -710,6 +771,7 @@ emBspl <- function(
 #' @param lb.opt Lower bound
 #' @param ub.opt Upper bound
 #' @return List describing model
+#' @export
 ebBeta <- function(
   x,
   m,

@@ -109,7 +109,8 @@ convert_to_data_table <- function(data_frame, minimum_coverage = 5) {
 #'
 #' Checks if the input data includes a header by checking column types of
 #' the input data frame. If a header is present, the indices of the required
-#' fields are noted and used with \code{preprocess_counts}
+#' fields are noted and used with \code{preprocess_counts}. Finally, the data
+#' frame is converted to a data table.
 #'
 #' @param data_frame A data frame containing required fields for NPBin analysis
 #' @return A data frame formatted for NPBin analysis
