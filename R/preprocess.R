@@ -61,6 +61,7 @@ logical_to_winning_chip <- function(logical_val) {
 #' @param chr_index Index of the total read count field
 #' @param chr_index Index of the reference allele count field
 #' @return A data frame 
+#' @export
 preprocess_counts <- function(
   data_frame,
   chr_index = 1,

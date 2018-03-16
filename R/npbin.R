@@ -13,7 +13,7 @@
 suppressMessages(library(parallel))
 suppressMessages(library(nloptr))
 suppressMessages(library(VGAM))
-
+#' @import parallel
 
 
 
