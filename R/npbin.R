@@ -193,7 +193,7 @@ intBinBspl <- function(bs, x, m) {
 #' @param bs A B-spline
 #' @param x x
 #' @param m m
-#' @ncores Number of cores to use
+#' @param ncores Number of cores to use
 getDesignMtx <- function(bs, x, m, ncores = 1) {
   nbasis <- length(bs)
   ndt <- length(x)
@@ -389,7 +389,7 @@ estNull1  <- function(
 #' @param init init
 #' @param iter.max Maximum number of iterations for EM algorithm
 #' @param err.max
-#' @param algoritm Numerical library to use
+#' @param algorithm Numerical library to use
 #' @param pseq pseq
 #' @param lb Lower bounds
 #' @param ub Upper bounds
