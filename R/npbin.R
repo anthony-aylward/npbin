@@ -29,6 +29,7 @@ suppressMessages(library(VGAM))
 #' @param rate1 First shape parameter
 #' @param rate2 Second shape parameter
 #' @param log logical; if TRUE, probabilities p are given as log(p).
+#' @return vector describing the density
 dbetabinom.vec <- function(x, m, rate1, rate2, log=TRUE) {
   n <- length(x)
   lvec <- sapply(
@@ -53,7 +54,7 @@ dbetabinom.vec <- function(x, m, rate1, rate2, log=TRUE) {
 #' @param breaks Break points of the spline
 #' @param k Spline order
 #' @param ncores Number of cores to use
-#' @returns A list containing breaks and spline coefficients
+#' @return A list containing breaks and spline coefficients
 bsplfun <- function(
   xrange = c(0, 1),
   breaks = seq(xrange[1], xrange[2], length.out = 100),
@@ -122,7 +123,7 @@ bsplfun <- function(
 #'
 #' @param ii Index to update
 #' @param bspl Spline to update
-#' @returns A list containing breaks and coefficients for a new spline
+#' @return A list containing breaks and coefficients for a new spline
 bsplfun.updt <- function(ii, bspl) { 
   bs1 <- bspl[[ii]]
   breaks1 <- bs1[["breaks"]]
@@ -173,7 +174,7 @@ iBiBsFun <- function(bk, x, m, cf) {
 #' @param bs A B-spline
 #' @param x
 #' @param m
-#' @returns The integral value.
+#' @return The integral value.
 intBinBspl <- function(bs, x, m) { 
   breaks <- bs[['breaks']]
   cf <- bs[['coef']]
@@ -219,7 +220,7 @@ getDesignMtx <- function(bs, x, m, ncores = 1) {
 #' @param ncores Number of cores to use
 #' @param err.max Max error for the EM algorithm
 #' @param iter.max Max number of iterations
-#' @returns A list giving model details
+#' @return A list giving model details
 emBinBspl <- function(
   x,
   m,
@@ -290,7 +291,7 @@ emBinBspl <- function(
 #' @param p
 #' @param bspl A B-spline
 #' @param ncores Number of cores to use
-#' @returns A matrix giving the evaluation result
+#' @return A matrix giving the evaluation result
 evBspl <- function(p, bspl, ncores = 1) {
   nb <- length(bspl)
   k <- dim(bspl[[1]][["coef"]])[1]
@@ -325,7 +326,7 @@ evBspl <- function(p, bspl, ncores = 1) {
 #' @param p
 #' @param bspl A B-spline
 #' @param ncores Number of cores to use
-#' @returns A matrix giving the evaluation result
+#' @return A matrix giving the evaluation result
 evBsplDrv <- function(p, bspl, ncores = 1) {
   nb <- length(bspl)
   k <- dim(bspl[[1]][["coef"]])[1]
@@ -360,7 +361,7 @@ evBsplDrv <- function(p, bspl, ncores = 1) {
 #' @param mod
 #' @param pseq
 #' @param ncores Number of cores to use
-#' @returns List describing the model
+#' @return List describing the model
 estNull1  <- function(
   mod,
   pseq = (1:9999) / 1e4,
@@ -392,7 +393,7 @@ estNull1  <- function(
 #' @param pseq
 #' @param lb Lower bounds
 #' @param ub Upper bounds
-#' @returns mod 
+#' @return mod 
 estNull2 <- function(
   x,
   m,
@@ -474,7 +475,7 @@ estNull2 <- function(
 #' @param pseq
 #' @param lb Lower bounds
 #' @param ub Upper bounds
-#' @returns mod 
+#' @return mod 
 estNull  <- function(
   x,
   m,
@@ -510,7 +511,7 @@ estNull  <- function(
 #' Convert locfdr to FDR.
 #'
 #' @param locfdr Local FDR value
-#' @returns FDR value
+#' @return FDR value
 locfdr2FDR <- function(locfdr) {
   n <- length(locfdr)
   sapply(1:n, function(ii) mean(locfdr[locfdr <= locfdr[ii]]))
@@ -523,7 +524,7 @@ locfdr2FDR <- function(locfdr) {
 #'
 #' @param r Vector of ranks
 #' @param id
-#' @returns vector indicating discoveries
+#' @return vector indicating discoveries
 rank2nhit <- function(r, id) {sapply(r, function(y) sum((r <= y) & id))}
 
 
@@ -545,7 +546,7 @@ rank2nhit <- function(r, id) {sapply(r, function(y) sum((r <= y) & id))}
 #' @param err.max
 #' @param lb.opt Lower bound
 #' @param ub.opt Upper bound
-#' @returns List describing optimized model
+#' @return List describing optimized model
 betaTrim_mle <- function(
   x,
   m,
@@ -621,7 +622,7 @@ betaTrim_mle <- function(
 #' @param ncores
 #' @param err.max
 #' @param iter.max
-#' @returns List describing optimized model
+#' @return List describing optimized model
 emBspl <- function(
   x,
   m,
@@ -709,7 +710,7 @@ emBspl <- function(
 #' @param ncores Number of cores to use
 #' @param lb.opt Lower bound
 #' @param ub.opt Upper bound
-#' @returns List describing model
+#' @return List describing model
 ebBeta <- function(
   x,
   m,
