@@ -115,7 +115,7 @@ convert_to_data_table <- function(data_frame, minimum_coverage = 5) {
 #' @param data_frame A data frame containing required fields for NPBin analysis
 #' @return A data frame formatted for NPBin analysis
 #' @export
-preprocess_file <- function(file_path, minimum_coverage = 5) {
+npbin_preprocess_file <- function(file_path, minimum_coverage = 5) {
   header_indices <- list(
     chr_index = 1,
     location_index = 2,
