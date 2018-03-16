@@ -147,10 +147,10 @@ bsplfun.updt <- function(ii, bspl) {
 #' @details
 #' Integration over one spline basis function
 #'
-#' @param bk 
-#' @param x
-#' @param m
-#' @param cf
+#' @param bk Pair of points
+#' @param x 
+#' @param m 
+#' @param cf Coefficient
 iBiBsFun <- function(bk, x, m, cf) {
   k <- length(cf)
   sapply(
@@ -172,8 +172,8 @@ iBiBsFun <- function(bk, x, m, cf) {
 #' Integration of Binomial + B spline.
 #'
 #' @param bs A B-spline
-#' @param x
-#' @param m
+#' @param x x
+#' @param m m
 #' @return The integral value.
 intBinBspl <- function(bs, x, m) { 
   breaks <- bs[['breaks']]
@@ -191,8 +191,8 @@ intBinBspl <- function(bs, x, m) {
 #' get the design matrix c_ij
 #'
 #' @param bs A B-spline
-#' @param x
-#' @param m
+#' @param x x
+#' @param m m
 #' @ncores Number of cores to use
 getDesignMtx <- function(bs, x, m, ncores = 1) {
   nbasis <- length(bs)
@@ -213,8 +213,8 @@ getDesignMtx <- function(bs, x, m, ncores = 1) {
 #' @details
 #' We remove the basis that only covers bin at the boundary
 #'
-#' @param x
-#' @param m
+#' @param x x
+#' @param m m
 #' @param breaks break points for the spline
 #' @param k Spline order
 #' @param ncores Number of cores to use
@@ -288,7 +288,7 @@ emBinBspl <- function(
 #' @details
 #' evaluate B-spline function
 #'
-#' @param p
+#' @param p p
 #' @param bspl A B-spline
 #' @param ncores Number of cores to use
 #' @return A matrix giving the evaluation result
@@ -323,7 +323,7 @@ evBspl <- function(p, bspl, ncores = 1) {
 #' @details
 #' evaluate the derivative of B-spline
 #'
-#' @param p
+#' @param p p
 #' @param bspl A B-spline
 #' @param ncores Number of cores to use
 #' @return A matrix giving the evaluation result
@@ -358,8 +358,8 @@ evBsplDrv <- function(p, bspl, ncores = 1) {
 #' @details
 #' estimate the null model, part 1
 #'
-#' @param mod
-#' @param pseq
+#' @param mod mod
+#' @param pseq pseq
 #' @param ncores Number of cores to use
 #' @return List describing the model
 estNull1  <- function(
@@ -382,15 +382,15 @@ estNull1  <- function(
 #' @details
 #' estimate the null model, part 2
 #'
-#' @param x
-#' @param m
-#' @param mod
+#' @param x x
+#' @param m m
+#' @param mod mod
 #' @param prep Info prepared by estNull1
-#' @param init
+#' @param init init
 #' @param iter.max Maximum number of iterations for EM algorithm
 #' @param err.max
 #' @param algoritm Numerical library to use
-#' @param pseq
+#' @param pseq pseq
 #' @param lb Lower bounds
 #' @param ub Upper bounds
 #' @return mod 
@@ -464,15 +464,15 @@ estNull2 <- function(
 #' @details
 #' estimate the null model
 #'
-#' @param x
-#' @param m
-#' @param mod
+#' @param x x
+#' @param m m
+#' @param mod mod
 #' @param prep Info prepared by estNull1
-#' @param init
+#' @param init init
 #' @param iter.max Maximum number of iterations for EM algorithm
 #' @param err.max
 #' @param algoritm Numerical library to use
-#' @param pseq
+#' @param pseq pseq
 #' @param lb Lower bounds
 #' @param ub Upper bounds
 #' @return mod 
@@ -523,7 +523,7 @@ locfdr2FDR <- function(locfdr) {
 #' Convert ranking to the number of discoveries
 #'
 #' @param r Vector of ranks
-#' @param id
+#' @param id id
 #' @return vector indicating discoveries
 rank2nhit <- function(r, id) {sapply(r, function(y) sum((r <= y) & id))}
 
@@ -537,11 +537,11 @@ rank2nhit <- function(r, id) {sapply(r, function(y) sum((r <= y) & id))}
 #' @details
 #' Estimate the null model following Efron's approach.
 #'
-#' @param x
-#' @param m
-#' @param p
-#' @param pct0
-#' @param init
+#' @param x x
+#' @param m m
+#' @param p p
+#' @param pct0 pct0
+#' @param init init
 #' @param iter.max Maximum number of iterations
 #' @param err.max
 #' @param lb.opt Lower bound
@@ -613,15 +613,15 @@ betaTrim_mle <- function(
 #' Estimate the overall model directly via B-spline. Remove the basis that only
 #' covers bin at the boundary.
 #'
-#' @param x
-#' @param m
-#' @param p
-#' @param breaks
+#' @param x x
+#' @param m m
+#' @param p p
+#' @param breaks breaks
 #' @param k Spline order
-#' @param pi.init
-#' @param ncores
-#' @param err.max
-#' @param iter.max
+#' @param pi.init pi.init
+#' @param ncores Number of cores to use
+#' @param err.max err.max
+#' @param iter.max Max iterations
 #' @return List describing optimized model
 emBspl <- function(
   x,
@@ -698,15 +698,15 @@ emBspl <- function(
 #'
 #' @details
 #' wrapper of EBO and EBE
-#' @param x
-#' @param m
-#' @param p
-#' @param breaks
-#' @param pi.init
-#' @param pct0
-#' @param init
+#' @param x x
+#' @param m m
+#' @param p p
+#' @param breaks breaks
+#' @param pi.init pi.init
+#' @param pct0 pct0
+#' @param init init
 #' @param iter.max Max iterations
-#' @param err.max
+#' @param err.max err.max
 #' @param ncores Number of cores to use
 #' @param lb.opt Lower bound
 #' @param ub.opt Upper bound
