@@ -16,10 +16,11 @@
 
 # Function definitions ---------------------------------------------------------
 
-#' Get the indices of required fields in a header.
+#' @title Get the indices of required fields in a header.
 #'
-#' Returns a list providing the index of each required field.
+#' @description Returns a list providing the index of each required field.
 #'
+#' @details
 #' \code{get_header_indices} accepts a character vector, which could be the
 #' entire header in one element separated by whitespace or a vector with
 #' several elements, one for each field. It uses \code{which} to determine

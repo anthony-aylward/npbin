@@ -2,7 +2,7 @@
 # initialize_weights.R
 #===============================================================================
 
-#' @Initialize weights
+#' @title Initialize weights
 #'
 #' @details
 #' Initialize the weights using the histogram of p_hat
