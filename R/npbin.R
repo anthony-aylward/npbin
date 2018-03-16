@@ -1,4 +1,3 @@
-#!/usr/bin/Rscript
 #===============================================================================
 # npbin.R
 #===============================================================================
@@ -8,12 +7,12 @@
 
 
 
-# Libraries --------------------------------------------------------------------
+# Imports ----------------------------------------------------------------------
 
-suppressMessages(library(parallel))
-suppressMessages(library(nloptr))
-suppressMessages(library(VGAM))
 #' @import parallel
+#' @import nloptr
+#' @import VGAM
+
 
 
 

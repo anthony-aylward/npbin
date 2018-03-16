@@ -1,9 +1,15 @@
-#!/usr/bin/Rscript
 #===============================================================================
 # preprocess_counts.R
 #===============================================================================
 
 # Preprocess allele count data
+
+
+
+
+# Imports ----------------------------------------------------------------------
+
+#' @import data.table
 
 
 
@@ -81,6 +87,21 @@ preprocess_counts <- function(
   )
 }
 
+#' @title Convert input data frame to a data table
+#'
+#' @details
+#' A minimum coverage level will be enforced
+#'
+#' @param data_frame A data frame containing at least the required fields
+#' @param minimum_coverage The minimum coverage level that will be enforced
+#' @return A data table
+#' @export
+convert_to_data_table <- function(data_frame, minimum_coverage = 5) {
+  data_table <- data.table(data_frame)[m >= minimum_coverage, ]
+  data_table[, p_hat := xm / m]
+  data_table
+}
+
 #' Preprocess allele count data, handling a header if necessary.
 #'
 #' This function wraps \code{preprocess_counts} with header handling.
@@ -92,7 +113,7 @@ preprocess_counts <- function(
 #' @param data_frame A data frame containing required fields for NPBin analysis
 #' @return A data frame formatted for NPBin analysis
 #' @export
-preprocess_file <- function(file_path) {
+preprocess_file <- function(file_path, minimum_coverage = 5) {
   header_indices <- list(
     chr_index = 1,
     location_index = 2,
@@ -106,11 +127,13 @@ preprocess_file <- function(file_path) {
     header_indices <- get_header_indices(names(data_frame))
   }
   
-  preprocess_counts(
+  preprocessed_data_frame <- preprocess_counts(
     data_frame,
     chr_index = header_indices[["chr_index"]],
     location_index = header_indices[["location_index"]],
     total_index = header_indices[["total_index"]],
     ref_count_index = header_indices[["ref_count_index"]]
   )
+  
+  convert_to_data_table(preprocessed_data_frame)
 }
