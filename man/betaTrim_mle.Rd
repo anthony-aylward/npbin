@@ -36,3 +36,8 @@ Efron null model
 \details{
 Estimate the null model following Efron's approach.
 }
+\seealso{
+Other comparison functions: \code{\link{ebBeta}},
+  \code{\link{emBspl}}
+}
+\concept{comparison functions}

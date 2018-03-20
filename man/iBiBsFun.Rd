@@ -21,3 +21,6 @@ Spline basis function integration.
 \details{
 Integration over one spline basis function
 }
+\seealso{
+\code{\link{intBinBspl}}
+}

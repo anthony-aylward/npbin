@@ -43,3 +43,8 @@ Wrap alternative models.
 \details{
 wrapper of EBO and EBE
 }
+\seealso{
+Other comparison functions: \code{\link{betaTrim_mle}},
+  \code{\link{emBspl}}
+}
+\concept{comparison functions}

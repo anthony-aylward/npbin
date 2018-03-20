@@ -26,3 +26,6 @@ Beta binomial density.
 \details{
 \code{dbetabinom.vec} returns a vector giving the beta binomial density.
 }
+\seealso{
+\code{\link{estNull2}}, \code{\link{betaTrim_mle}}
+}

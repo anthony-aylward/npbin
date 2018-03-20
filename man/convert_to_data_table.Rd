@@ -20,3 +20,6 @@ Convert input data frame to a data table
 \details{
 A minimum coverage level will be enforced
 }
+\seealso{
+\code{\link{npbin_preprocess_file}}
+}

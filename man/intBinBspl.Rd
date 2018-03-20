@@ -22,3 +22,6 @@ Binomial and B-spline integration.
 \details{
 Integration of Binomial + B spline.
 }
+\seealso{
+\code{\link{iBiBsFun}}, \code{\link{getDesignMtx}}
+}

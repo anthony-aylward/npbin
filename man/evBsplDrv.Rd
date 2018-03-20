@@ -22,3 +22,6 @@ B-spline derivative evaluation.
 \details{
 evaluate the derivative of B-spline
 }
+\seealso{
+\code{\link{evBspl}}, \code{\link{estNull1}}
+}

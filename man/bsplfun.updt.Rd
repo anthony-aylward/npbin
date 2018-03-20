@@ -20,3 +20,6 @@ Update B-spline.
 \details{
 Updates the B-spline at a certain index and returns a new spline.
 }
+\seealso{
+\code{\link{bsplfun}}
+}

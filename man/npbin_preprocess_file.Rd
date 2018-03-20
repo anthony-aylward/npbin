@@ -21,3 +21,7 @@ the input data frame. If a header is present, the indices of the required
 fields are noted and used with \code{preprocess_counts}. Finally, the data
 frame is converted to a data table.
 }
+\seealso{
+\code{\link{get_header_indices}}, \code{\link{preprocess_counts}},
+  \code{\link{convert_to_data_table}}
+}

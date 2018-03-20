@@ -22,3 +22,7 @@ B-spline evaluation.
 \details{
 evaluate B-spline function
 }
+\seealso{
+\code{\link{evBsplDrv}}, \code{\link{estNull1}},
+  \code{\link{emBspl}}
+}

@@ -18,3 +18,6 @@ Convert locfdr to FDR.
 \details{
 Convert locfdr to FDR.
 }
+\seealso{
+\code{\link{npbin}}
+}

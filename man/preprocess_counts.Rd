@@ -28,3 +28,7 @@ Perform preprocessing steps to prepare data for NPBin analysis
 This function extracts the required fields from the input data and returns
 a data frame formatted for NPBin analysis.
 }
+\seealso{
+\code{\link{logical_to_winning_chip}},
+  \code{\link{npbin_preprocess_file}}
+}

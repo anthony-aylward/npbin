@@ -21,3 +21,7 @@ Design matrix extraction
 \details{
 get the design matrix c_ij
 }
+\seealso{
+\code{\link{ntBinBspl}}, \code{\link{emBinBspl}},
+  \code{\link{emBspl}}
+}

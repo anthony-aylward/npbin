@@ -32,3 +32,7 @@ NPBin model.
 \details{
 We remove the basis that only covers bin at the boundary
 }
+\seealso{
+\code{\link{bsplfun}}, \code{\link{getDesignMtx}},
+  \code{\link{npbin}}
+}

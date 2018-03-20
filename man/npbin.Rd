@@ -26,3 +26,7 @@ NPBin
 \details{
 Perform an NPBin analysis
 }
+\seealso{
+\code{\link{initialize_weights}}, \code{\link{emBinBspl}},
+  \code{\link{estNull}}
+}

@@ -40,3 +40,10 @@ Null model estimation
 \details{
 estimate the null model
 }
+\seealso{
+\code{\link{npbin}}
+
+Other estNulls: \code{\link{estNull1}},
+  \code{\link{estNull2}}
+}
+\concept{estNulls}

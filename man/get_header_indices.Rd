@@ -21,3 +21,6 @@ entire header in one element separated by whitespace or a vector with
 several elements, one for each field. It uses \code{which} to determine
 the inidces of the required fields.
 }
+\seealso{
+\code{\link{npbin_preprocess_file}}
+}

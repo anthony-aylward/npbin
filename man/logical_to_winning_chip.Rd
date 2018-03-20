@@ -19,3 +19,6 @@ Converts TRUE to "P", FALSE to "M".
 This is a utility for construction of the "winning.chip" field required by
 NPBin functions.
 }
+\seealso{
+\code{\link{preprocess_counts}}
+}

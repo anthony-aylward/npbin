@@ -40,3 +40,10 @@ Null model estimation
 \details{
 estimate the null model, part 2
 }
+\seealso{
+\code{\link{dbetabinom.vec}}
+
+Other estNulls: \code{\link{estNull1}},
+  \code{\link{estNull}}
+}
+\concept{estNulls}

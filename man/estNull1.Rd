@@ -22,3 +22,10 @@ Null model estimation
 \details{
 estimate the null model, part 1
 }
+\seealso{
+\code{\link{evBspl}}, \code{\link{evBsplDrv}}
+
+Other estNulls: \code{\link{estNull2}},
+  \code{\link{estNull}}
+}
+\concept{estNulls}

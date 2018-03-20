@@ -37,3 +37,8 @@ Direct B-spline estimation.
 Estimate the overall model directly via B-spline. Remove the basis that only
 covers bin at the boundary.
 }
+\seealso{
+Other comparison functions: \code{\link{betaTrim_mle}},
+  \code{\link{ebBeta}}
+}
+\concept{comparison functions}

@@ -25,3 +25,7 @@ Create B-spline.
 \details{
 Create a B-spline.
 }
+\seealso{
+\code{\link{bsplfun.updt}}, \code{\link{emBinBspl}},
+  \code{\link{emBspl}}
+}
