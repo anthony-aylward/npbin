@@ -14,8 +14,6 @@ vignette: >
 We will analyze a subset of one of the sample dataset for illustration
 purposes.
 
-
-
 ```r
 library(npbin)
 
@@ -30,59 +28,196 @@ colnames(dt)
 #> [10] "winnig.motif"    "potential_TP"    "potential_FP"
 ```
 
+for illustration purpose, keep only the 2000 points, remove this line will
+end up with analyzing the whole data set. It could be slow if only one core
+is used.
 
+```r
+dt.ct <- dt.ct[1:2000, ]
+#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
+```
 
-## Vignette Info
+NPBin
 
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+```r
+n_breaks <- 11 # number of breaks
+spline_order <- 4 # order of splines
+breaks <- seq(0, 1, length.out = n_breaks)
+pi_init <- hist(
+  dt.ct[, p_hat],
+  breaks = seq(0, 1, length.out = n_breaks + spline_order - 3),
+  plot = FALSE
+)[["density"]] # initialized the weights using the histogram of p_hat
+#> Error in hist(dt.ct[, p_hat], breaks = seq(0, 1, length.out = n_breaks + : object 'dt.ct' not found
+```
 
-## Styles
+estimate the overall model
 
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
+```r
+overall_model_estimate <- emBinBspl(
+  dt.ct[, xm],
+  dt.ct[, m],
+  breaks = breaks,
+  k = spline_order,
+  pi.init = pi_init,
+  ncores = n_cores,
+  err.max = 1e-3,
+  iter.max = 200
+)  
+#> Error in emBinBspl(dt.ct[, xm], dt.ct[, m], breaks = breaks, k = spline_order, : object 'dt.ct' not found
+```
 
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
+estimate the null model
 
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
+```r
+null_model_estimate <- estNull(
+  dt.ct[, xm],
+  dt.ct[, m],
+  overall_model_estimate,
+  init = NULL,
+  iter.max = 200,
+  ncores = n_cores,
+  ub = rep(log(1e4), 2),
+  err.max = 1e-4
+)
+#> Error in estNull1(mod, pseq, ncores = ncores): object 'overall_model_estimate' not found
+dt.ct[,
+  fnp := null_model_estimate[["f"]]
+][,
+  f0np := null_model_estimate[["f0"]]
+][,
+  locfdrnp := null_model_estimate[["locfdr"]]
+][,
+  fdrnp := locfdr2FDR(locfdrnp)
+][,
+  ranknp := rank(locfdrnp, ties.method = "max")
+]
+#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
+names(null_model_estimate)
+#> Error in eval(expr, envir, enclos): object 'null_model_estimate' not found
+```
 
 
 ```r
-plot(1:10)
-plot(10:1)
+null_model_estimate$coef.null
+#> Error in eval(expr, envir, enclos): object 'null_model_estimate' not found
 ```
 
-![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png)![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-2.png)
+Empirical Bayes test using p_hat
 
-You can enable figure captions by `fig_caption: yes` in YAML:
+```r
+pct0 <- 0.45         
+empirical_bayes_beta_hat <- ebBeta(
+  dt.ct[, xm],
+  dt.ct[, m],
+  dt.ct[, p_hat],
+  breaks = breaks,
+  k = spline_order,
+  pi.init = pi_init,
+  pct0 = pct0,
+  init = NULL,
+  iter.max = 200,
+  err.max = 1e-4,
+  ncores = n_cores
+)
+#> Error in emBspl(x, m, p, breaks = breaks, k = k, pi.init = pi.init, ncores = ncores, : object 'dt.ct' not found
+dt.ct[,
+  fhat := empirical_bayes_beta_hat[["f"]]
+][,
+  f0hat := empirical_bayes_beta_hat[["f0"]]
+][,
+  locfdrhat := empirical_bayes_beta_hat[["locfdr"]]
+][,
+  fdrhat := locfdr2FDR(locfdrhat)
+][,
+  rankhat := rank(locfdrhat, ties.method = "max")
+]
+#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
+names(empirical_bayes_beta_hat)
+#> Error in eval(expr, envir, enclos): object 'empirical_bayes_beta_hat' not found
+```
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
+null parameters of EBE
 
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
+```r
+empirical_bayes_beta_hat[["coef.null"]]
+#> Error in eval(expr, envir, enclos): object 'empirical_bayes_beta_hat' not found
+```
 
-## More Examples
+Binomial test
 
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
+```r
+p_binomial <- sapply(
+  1:n,
+  function(y) binom.test(dt.ct[y, xm], dt.ct[y, m])[["p.value"]]
+)
+#> Error in lapply(X = X, FUN = FUN, ...): object 'n' not found
+dt.ct[,
+  pvbin := p_binomial
+][,
+  fdrbin := p.adjust(pvbin, method = "BH")
+][,
+  rankbin := rank(pvbin, ties.method = "max")
+]
+#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
+```
 
+Evaluate the results using motifs
 
-|                  |  mpg| cyl|  disp|  hp| drat|    wt|  qsec| vs| am| gear| carb|
-|:-----------------|----:|---:|-----:|---:|----:|-----:|-----:|--:|--:|----:|----:|
-|Mazda RX4         | 21.0|   6| 160.0| 110| 3.90| 2.620| 16.46|  0|  1|    4|    4|
-|Mazda RX4 Wag     | 21.0|   6| 160.0| 110| 3.90| 2.875| 17.02|  0|  1|    4|    4|
-|Datsun 710        | 22.8|   4| 108.0|  93| 3.85| 2.320| 18.61|  1|  1|    4|    1|
-|Hornet 4 Drive    | 21.4|   6| 258.0| 110| 3.08| 3.215| 19.44|  1|  0|    3|    1|
-|Hornet Sportabout | 18.7|   8| 360.0| 175| 3.15| 3.440| 17.02|  0|  0|    3|    2|
-|Valiant           | 18.1|   6| 225.0| 105| 2.76| 3.460| 20.22|  1|  0|    3|    1|
-|Duster 360        | 14.3|   8| 360.0| 245| 3.21| 3.570| 15.84|  0|  0|    3|    4|
-|Merc 240D         | 24.4|   4| 146.7|  62| 3.69| 3.190| 20.00|  1|  0|    4|    2|
-|Merc 230          | 22.8|   4| 140.8|  95| 3.92| 3.150| 22.90|  1|  0|    4|    2|
-|Merc 280          | 19.2|   6| 167.6| 123| 3.92| 3.440| 18.30|  1|  0|    4|    4|
+number of potential TP defined based on motif
 
-Also a quote using `>`:
+```r
+dt.ct[, sum(potential_TP)]
+#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
+```
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+number of potential FP defined based on motif
+
+```r
+dt.ct[, sum(potential_FP)]
+#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
+```
+
+find the number of TP and FP in top ranked SNPs
+
+```r
+dt.ct[,
+  tpnp := rank2nhit(ranknp ,potential_TP)
+][,
+  fpnp := rank2nhit(ranknp, potential_FP)
+]
+#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
+dt.ct[,
+  tp_hat := rank2nhit(rankhat, potential_TP)
+][,
+  fp_hat := rank2nhit(rankhat, potential_FP)
+]
+#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
+dt.ct[,
+  tpbin := rank2nhit(rankbin, potential_TP)
+][,
+  fpbin := rank2nhit(rankbin, potential_FP)
+]
+#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
+```
+
+plot the accuracy measure as in the main paper. 
+We presented a zoom-in version in the main paper to the top 20%, 
+because usually there are not many ALI SNPs.
+Note that the default of the demo only select a subset of the data for
+illustration purposes.
+Thus the figure may not an exact replica of the one in the paper.
+To reproduce the results in the paper, please use the whole dataset
+
+```r
+cbfpalette <- c(
+  "#D55E00",
+  "#0072B2",
+  "#CC79A7",
+  "#009E73",
+  "#E69F00",
+  "#56B4E9",
+  "#F0E442"
+)
+plotidac <- c(' NPB','EBE','Binom')
+```
