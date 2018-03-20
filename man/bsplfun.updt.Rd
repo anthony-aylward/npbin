@@ -11,6 +11,9 @@ bsplfun.updt(ii, bspl)
 
 \item{bspl}{Spline to update}
 }
+\value{
+A list containing breaks and coefficients for a new spline
+}
 \description{
 Update B-spline.
 }

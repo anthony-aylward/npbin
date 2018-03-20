@@ -9,6 +9,9 @@ locfdr2FDR(locfdr)
 \arguments{
 \item{locfdr}{Local FDR value}
 }
+\value{
+FDR value
+}
 \description{
 Convert locfdr to FDR.
 }

@@ -8,6 +8,13 @@ intBinBspl(bs, x, m)
 }
 \arguments{
 \item{bs}{A B-spline}
+
+\item{x}{x}
+
+\item{m}{m}
+}
+\value{
+The integral value.
 }
 \description{
 Binomial and B-spline integration.

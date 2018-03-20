@@ -7,7 +7,14 @@
 estNull1(mod, pseq = (1:9999)/10000, ncores = 1)
 }
 \arguments{
+\item{mod}{mod}
+
+\item{pseq}{pseq}
+
 \item{ncores}{Number of cores to use}
+}
+\value{
+List describing the model
 }
 \description{
 Null model estimation

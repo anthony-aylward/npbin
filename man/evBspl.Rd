@@ -7,9 +7,14 @@
 evBspl(p, bspl, ncores = 1)
 }
 \arguments{
+\item{p}{p}
+
 \item{bspl}{A B-spline}
 
 \item{ncores}{Number of cores to use}
+}
+\value{
+A matrix giving the evaluation result
 }
 \description{
 B-spline evaluation.

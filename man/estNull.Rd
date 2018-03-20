@@ -9,7 +9,19 @@ estNull(x, m, mod, init = NULL, ncores = 1, iter.max = 200,
   lb = c(0, 0), ub = rep(log(10000), 2))
 }
 \arguments{
+\item{x}{x}
+
+\item{m}{m}
+
+\item{mod}{mod}
+
+\item{init}{init}
+
 \item{iter.max}{Maximum number of iterations for EM algorithm}
+
+\item{err.max}{err.max}
+
+\item{pseq}{pseq}
 
 \item{lb}{Lower bounds}
 
@@ -18,6 +30,9 @@ estNull(x, m, mod, init = NULL, ncores = 1, iter.max = 200,
 \item{prep}{Info prepared by estNull1}
 
 \item{algoritm}{Numerical library to use}
+}
+\value{
+mod
 }
 \description{
 Null model estimation

@@ -10,13 +10,32 @@ ebBeta(x, m, p, breaks = seq(0, 1, length.out = 101), k = 4,
   ncores = 1, lb.opt = c(0, 0, 0), ub.opt = c(log(10000), log(10000), 1))
 }
 \arguments{
+\item{x}{x}
+
+\item{m}{m}
+
+\item{p}{p}
+
+\item{breaks}{breaks}
+
+\item{pi.init}{Initial weights}
+
+\item{pct0}{pct0}
+
+\item{init}{init}
+
 \item{iter.max}{Max iterations}
+
+\item{err.max}{err.max}
 
 \item{ncores}{Number of cores to use}
 
 \item{lb.opt}{Lower bound}
 
 \item{ub.opt}{Upper bound}
+}
+\value{
+List describing model
 }
 \description{
 Wrap alternative models.

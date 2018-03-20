@@ -8,6 +8,11 @@ rank2nhit(r, id)
 }
 \arguments{
 \item{r}{Vector of ranks}
+
+\item{id}{id}
+}
+\value{
+vector indicating discoveries
 }
 \description{
 Convert ranking to the number of discoveries

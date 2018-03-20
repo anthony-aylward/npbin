@@ -16,6 +16,9 @@ bsplfun(xrange = c(0, 1), breaks = seq(xrange[1], xrange[2], length.out =
 
 \item{ncores}{Number of cores to use}
 }
+\value{
+A list containing breaks and spline coefficients
+}
 \description{
 Create B-spline.
 }

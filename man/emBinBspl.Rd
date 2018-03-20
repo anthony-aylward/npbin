@@ -9,6 +9,10 @@ emBinBspl(x, m, breaks = seq(0, 1, length.out = 101), k = 4,
   ncores = 1, err.max = 1e-06, iter.max = 200)
 }
 \arguments{
+\item{x}{x}
+
+\item{m}{m}
+
 \item{breaks}{break points for the spline}
 
 \item{k}{Spline order}
@@ -18,6 +22,9 @@ emBinBspl(x, m, breaks = seq(0, 1, length.out = 101), k = 4,
 \item{err.max}{Max error for the EM algorithm}
 
 \item{iter.max}{Max number of iterations}
+}
+\value{
+A list giving model details
 }
 \description{
 NPBin model.

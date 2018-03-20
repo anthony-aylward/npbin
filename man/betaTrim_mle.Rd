@@ -9,11 +9,26 @@ betaTrim_mle(x, m, p, pct0 = 0.25, init = c(1, 1, 0.5), iter.max = 200,
   1))
 }
 \arguments{
+\item{x}{x}
+
+\item{m}{m}
+
+\item{p}{p}
+
+\item{pct0}{pct0}
+
+\item{init}{init}
+
 \item{iter.max}{Maximum number of iterations}
+
+\item{err.max}{err.max}
 
 \item{lb.opt}{Lower bound}
 
 \item{ub.opt}{Upper bound}
+}
+\value{
+List describing optimized model
 }
 \description{
 Efron null model

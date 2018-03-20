@@ -9,7 +9,26 @@ emBspl(x, m, p, breaks = seq(0, 1, length.out = 101), k = 4,
   ncores = 1, err.max = 1e-05, iter.max = 200)
 }
 \arguments{
+\item{x}{x}
+
+\item{m}{m}
+
+\item{p}{p}
+
+\item{breaks}{breaks}
+
 \item{k}{Spline order}
+
+\item{pi.init}{Initial weights}
+
+\item{ncores}{Number of cores to use}
+
+\item{err.max}{err.max}
+
+\item{iter.max}{Max iterations}
+}
+\value{
+List describing optimized model
 }
 \description{
 Direct B-spline estimation.

@@ -8,6 +8,12 @@ getDesignMtx(bs, x, m, ncores = 1)
 }
 \arguments{
 \item{bs}{A B-spline}
+
+\item{x}{x}
+
+\item{m}{m}
+
+\item{ncores}{Number of cores to use}
 }
 \description{
 Design matrix extraction

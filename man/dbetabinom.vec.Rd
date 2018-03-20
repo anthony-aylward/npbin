@@ -17,6 +17,9 @@ dbetabinom.vec(x, m, rate1, rate2, log = TRUE)
 
 \item{log}{logical; if TRUE, probabilities p are given as log(p).}
 }
+\value{
+vector describing the density
+}
 \description{
 Beta binomial density.
 }

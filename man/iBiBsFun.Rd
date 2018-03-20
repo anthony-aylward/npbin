@@ -7,7 +7,13 @@
 iBiBsFun(bk, x, m, cf)
 }
 \arguments{
-\item{bk}{}
+\item{bk}{Pair of points}
+
+\item{x}{x}
+
+\item{m}{m}
+
+\item{cf}{Coefficient}
 }
 \description{
 Spline basis function integration.
