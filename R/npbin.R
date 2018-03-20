@@ -30,6 +30,7 @@
 #' @param rate2 Second shape parameter
 #' @param log logical; if TRUE, probabilities p are given as log(p).
 #' @return vector describing the density
+#' @seealso \code{\link{estNull2}}, \code{\link{betaTrim_mle}}
 dbetabinom.vec <- function(x, m, rate1, rate2, log=TRUE) {
   n <- length(x)
   lvec <- sapply(
@@ -55,6 +56,8 @@ dbetabinom.vec <- function(x, m, rate1, rate2, log=TRUE) {
 #' @param k Spline order
 #' @param ncores Number of cores to use
 #' @return A list containing breaks and spline coefficients
+#' @seealso \code{\link{bsplfun.updt}}, \code{\link{emBinBspl}},
+#'   \code{\link{emBspl}}
 bsplfun <- function(
   xrange = c(0, 1),
   breaks = seq(xrange[1], xrange[2], length.out = 100),
@@ -124,6 +127,7 @@ bsplfun <- function(
 #' @param ii Index to update
 #' @param bspl Spline to update
 #' @return A list containing breaks and coefficients for a new spline
+#' @seealso \code{\link{bsplfun}}
 bsplfun.updt <- function(ii, bspl) { 
   bs1 <- bspl[[ii]]
   breaks1 <- bs1[["breaks"]]
@@ -151,6 +155,7 @@ bsplfun.updt <- function(ii, bspl) {
 #' @param x x
 #' @param m m
 #' @param cf Coefficient
+#' @seealso \code{\link{intBinBspl}}
 iBiBsFun <- function(bk, x, m, cf) {
   k <- length(cf)
   sapply(
@@ -175,6 +180,7 @@ iBiBsFun <- function(bk, x, m, cf) {
 #' @param x x
 #' @param m m
 #' @return The integral value.
+#' @seealso \code{\link{iBiBsFun}}, \code{\link{getDesignMtx}}
 intBinBspl <- function(bs, x, m) { 
   breaks <- bs[['breaks']]
   cf <- bs[['coef']]
@@ -194,6 +200,8 @@ intBinBspl <- function(bs, x, m) {
 #' @param x x
 #' @param m m
 #' @param ncores Number of cores to use
+#' @seealso \code{\link{ntBinBspl}}, \code{\link{emBinBspl}},
+#'   \code{\link{emBspl}}
 getDesignMtx <- function(bs, x, m, ncores = 1) {
   nbasis <- length(bs)
   ndt <- length(x)
@@ -222,6 +230,8 @@ getDesignMtx <- function(bs, x, m, ncores = 1) {
 #' @param iter.max Max number of iterations
 #' @return A list giving model details
 #' @export
+#' @seealso \code{\link{bsplfun}}, \code{\link{getDesignMtx}},
+#'   \code{\link{npbin}}
 emBinBspl <- function(
   x,
   m,
@@ -293,6 +303,8 @@ emBinBspl <- function(
 #' @param bspl A B-spline
 #' @param ncores Number of cores to use
 #' @return A matrix giving the evaluation result
+#' @seealso \code{\link{evBsplDrv}}, \code{\link{estNull1}},
+#'   \code{\link{emBspl}}
 evBspl <- function(p, bspl, ncores = 1) {
   nb <- length(bspl)
   k <- dim(bspl[[1]][["coef"]])[1]
@@ -328,6 +340,7 @@ evBspl <- function(p, bspl, ncores = 1) {
 #' @param bspl A B-spline
 #' @param ncores Number of cores to use
 #' @return A matrix giving the evaluation result
+#' @seealso \code{\link{evBspl}}, \code{\link{estNull1}}
 evBsplDrv <- function(p, bspl, ncores = 1) {
   nb <- length(bspl)
   k <- dim(bspl[[1]][["coef"]])[1]
@@ -363,7 +376,9 @@ evBsplDrv <- function(p, bspl, ncores = 1) {
 #' @param pseq pseq
 #' @param ncores Number of cores to use
 #' @return List describing the model
-estNull1  <- function(
+#' @seealso \code{\link{evBspl}}, \code{\link{evBsplDrv}}
+#' @family estNulls
+estNull1 <- function(
   mod,
   pseq = (1:9999) / 1e4,
   ncores = 1
@@ -395,6 +410,8 @@ estNull1  <- function(
 #' @param lb Lower bounds
 #' @param ub Upper bounds
 #' @return mod 
+#' @seealso \code{\link{dbetabinom.vec}}
+#' @family estNulls
 estNull2 <- function(
   x,
   m,
@@ -478,6 +495,8 @@ estNull2 <- function(
 #' @param ub Upper bounds
 #' @return mod
 #' @export
+#' @seealso \code{\link{npbin}}
+#' @family estNulls
 estNull  <- function(
   x,
   m,
@@ -515,6 +534,7 @@ estNull  <- function(
 #' @param locfdr Local FDR value
 #' @return FDR value
 #' @export
+#' @seealso \code{\link{npbin}}
 locfdr2FDR <- function(locfdr) {
   n <- length(locfdr)
   sapply(1:n, function(ii) mean(locfdr[locfdr <= locfdr[ii]]))
@@ -528,6 +548,7 @@ locfdr2FDR <- function(locfdr) {
 #' @param r Vector of ranks
 #' @param id id
 #' @return vector indicating discoveries
+#' @seealso 
 rank2nhit <- function(r, id) {sapply(r, function(y) sum((r <= y) & id))}
 
 #' @title NPBin
@@ -542,6 +563,8 @@ rank2nhit <- function(r, id) {sapply(r, function(y) sum((r <= y) & id))}
 #' @param n_cores Number of cores to use
 #' @return Data table containing model information
 #' @export
+#' @seealso \code{\link{initialize_weights}}, \code{\link{emBinBspl}},
+#'   \code{\link{estNull}}
 npbin <- function(dt.ct, n_breaks, spline_order, pi_init, n_cores) {
   n <- nrow(dt.ct)
   breaks <- seq(0, 1, length.out = n_breaks)
@@ -606,6 +629,7 @@ npbin <- function(dt.ct, n_breaks, spline_order, pi_init, n_cores) {
 #' @param ub.opt Upper bound
 #' @return List describing optimized model
 #' @export
+#' @family comparison functions
 betaTrim_mle <- function(
   x,
   m,
@@ -683,6 +707,7 @@ betaTrim_mle <- function(
 #' @param iter.max Max iterations
 #' @return List describing optimized model
 #' @export
+#' @family comparison functions
 emBspl <- function(
   x,
   m,
@@ -772,6 +797,7 @@ emBspl <- function(
 #' @param ub.opt Upper bound
 #' @return List describing model
 #' @export
+#' @family comparison functions
 ebBeta <- function(
   x,
   m,

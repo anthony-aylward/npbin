@@ -28,6 +28,7 @@
 #'
 #' @param header A character vector
 #' @return A list mapping required fields to their respective indices
+#' @seealso \code{\link{npbin_preprocess_file}}
 get_header_indices <- function(header) {
   if (length(header) == 1) {
     split_header <- strsplit(header, "\\s+")[[1]]
@@ -51,6 +52,7 @@ get_header_indices <- function(header) {
 #'
 #' @param logical_val A logical value
 #' @return "P" if input was TRUE, "M" if it was FALSE.
+#' @seealso \code{\link{preprocess_counts}}
 logical_to_winning_chip <- function(logical_val) {
   if (logical_val) {'P'} else {'M'}
 }
@@ -69,6 +71,8 @@ logical_to_winning_chip <- function(logical_val) {
 #' @param chr_index Index of the reference allele count field
 #' @return A data frame 
 #' @export
+#' @seealso \code{\link{logical_to_winning_chip}},
+#'   \code{\link{npbin_preprocess_file}}
 preprocess_counts <- function(
   data_frame,
   chr_index = 1,
@@ -97,6 +101,7 @@ preprocess_counts <- function(
 #' @param minimum_coverage The minimum coverage level that will be enforced
 #' @return A data table
 #' @export
+#' @seealso \code{\link{npbin_preprocess_file}}
 convert_to_data_table <- function(data_frame, minimum_coverage = 5) {
   data_table <- data.table(data_frame)[m >= minimum_coverage, ]
   data_table[, p_hat := xm / m]
@@ -115,6 +120,8 @@ convert_to_data_table <- function(data_frame, minimum_coverage = 5) {
 #' @param data_frame A data frame containing required fields for NPBin analysis
 #' @return A data frame formatted for NPBin analysis
 #' @export
+#' @seealso \code{\link{get_header_indices}}, \code{\link{preprocess_counts}},
+#'   \code{\link{convert_to_data_table}}
 npbin_preprocess_file <- function(file_path, minimum_coverage = 5) {
   header_indices <- list(
     chr_index = 1,

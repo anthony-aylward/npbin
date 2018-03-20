@@ -12,6 +12,7 @@
 #' @param spline_order Order of splines
 #' @return Histogram values
 #' @export
+#' @seealso \code{\link{npbin}}, \code{\link{emBspl}}, \code{\link{ebBeta}}
 initialize_weights <- function(data_table, n_breaks, spline_order) {
   hist(
     data_table[, p_hat],
