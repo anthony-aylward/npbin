@@ -1,7 +1,7 @@
 ---
 title: "NPBin"
 author: "Anthony Aylward"
-date: "2018-03-19"
+date: "2018-03-20"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -18,17 +18,16 @@ purposes.
 
 ```r
 library(npbin)
-#> Error in library(npbin): there is no package called 'npbin'
 
 minimum_coverage <- 5 # minimum total coverage allowed
 n_cores <- 47 # the number of cores to be used, can ONLY be 1 if run on Windows.
 
-dt <- read.table("data_atac.txt", header = TRUE)
-#> Warning in file(file, "rt"): cannot open file 'data_atac.txt': No such file
-#> or directory
-#> Error in file(file, "rt"): cannot open the connection
+dt <- atac
 colnames(dt)
-#> NULL
+#>  [1] "chr"             "location"        "m"              
+#>  [4] "xm"              "winning.chip"    "motif"          
+#>  [7] "pval.mat.atSNP"  "pval.pat.atSNP"  "pval.rank.atSNP"
+#> [10] "winnig.motif"    "potential_TP"    "potential_FP"
 ```
 
 
