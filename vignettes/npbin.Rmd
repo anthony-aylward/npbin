@@ -18,8 +18,6 @@ knitr::opts_chunk$set(
 
 We will analyze a subset of one of the sample dataset for illustration
 purposes.
-
-
 ```{r}
 library(npbin)
 
@@ -30,46 +28,166 @@ dt <- atac
 colnames(dt)
 ```
 
+for illustration purpose, keep only the 2000 points, remove this line will
+end up with analyzing the whole data set. It could be slow if only one core
+is used.
+```{r}
+dt.ct <- dt.ct[1:2000, ]
+```
 
+NPBin
+```{r}
+n_breaks <- 11 # number of breaks
+spline_order <- 4 # order of splines
+breaks <- seq(0, 1, length.out = n_breaks)
+pi_init <- hist(
+  dt.ct[, p_hat],
+  breaks = seq(0, 1, length.out = n_breaks + spline_order - 3),
+  plot = FALSE
+)[["density"]] # initialized the weights using the histogram of p_hat
+```
 
-## Vignette Info
+estimate the overall model
+```{r}
+overall_model_estimate <- emBinBspl(
+  dt.ct[, xm],
+  dt.ct[, m],
+  breaks = breaks,
+  k = spline_order,
+  pi.init = pi_init,
+  ncores = n_cores,
+  err.max = 1e-3,
+  iter.max = 200
+)  
+```
 
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+estimate the null model
+```{r}
+null_model_estimate <- estNull(
+  dt.ct[, xm],
+  dt.ct[, m],
+  overall_model_estimate,
+  init = NULL,
+  iter.max = 200,
+  ncores = n_cores,
+  ub = rep(log(1e4), 2),
+  err.max = 1e-4
+)
+dt.ct[,
+  fnp := null_model_estimate[["f"]]
+][,
+  f0np := null_model_estimate[["f0"]]
+][,
+  locfdrnp := null_model_estimate[["locfdr"]]
+][,
+  fdrnp := locfdr2FDR(locfdrnp)
+][,
+  ranknp := rank(locfdrnp, ties.method = "max")
+]
+names(null_model_estimate)
+```
 
-## Styles
+```{r}
+null_model_estimate$coef.null
+```
 
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
+Empirical Bayes test using p_hat
+```{r}
+pct0 <- 0.45         
+empirical_bayes_beta_hat <- ebBeta(
+  dt.ct[, xm],
+  dt.ct[, m],
+  dt.ct[, p_hat],
+  breaks = breaks,
+  k = spline_order,
+  pi.init = pi_init,
+  pct0 = pct0,
+  init = NULL,
+  iter.max = 200,
+  err.max = 1e-4,
+  ncores = n_cores
+)
+dt.ct[,
+  fhat := empirical_bayes_beta_hat[["f"]]
+][,
+  f0hat := empirical_bayes_beta_hat[["f0"]]
+][,
+  locfdrhat := empirical_bayes_beta_hat[["locfdr"]]
+][,
+  fdrhat := locfdr2FDR(locfdrhat)
+][,
+  rankhat := rank(locfdrhat, ties.method = "max")
+]
+names(empirical_bayes_beta_hat)
+```
 
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
+null parameters of EBE
+```{r}
+empirical_bayes_beta_hat[["coef.null"]]
+```
 
-## Figures
+Binomial test
+```{r}
+p_binomial <- sapply(
+  1:n,
+  function(y) binom.test(dt.ct[y, xm], dt.ct[y, m])[["p.value"]]
+)
+dt.ct[,
+  pvbin := p_binomial
+][,
+  fdrbin := p.adjust(pvbin, method = "BH")
+][,
+  rankbin := rank(pvbin, ties.method = "max")
+]
+```
 
-The figure sizes have been customised so that you can easily put two images side-by-side. 
+Evaluate the results using motifs
 
+number of potential TP defined based on motif
+```{r}
+dt.ct[, sum(potential_TP)]
+```
+
+number of potential FP defined based on motif
+```{r}
+dt.ct[, sum(potential_FP)]
+```
+
+find the number of TP and FP in top ranked SNPs
+```{r}
+dt.ct[,
+  tpnp := rank2nhit(ranknp ,potential_TP)
+][,
+  fpnp := rank2nhit(ranknp, potential_FP)
+]
+dt.ct[,
+  tp_hat := rank2nhit(rankhat, potential_TP)
+][,
+  fp_hat := rank2nhit(rankhat, potential_FP)
+]
+dt.ct[,
+  tpbin := rank2nhit(rankbin, potential_TP)
+][,
+  fpbin := rank2nhit(rankbin, potential_FP)
+]
+```
+
+plot the accuracy measure as in the main paper. 
+We presented a zoom-in version in the main paper to the top 20%, 
+because usually there are not many ALI SNPs.
+Note that the default of the demo only select a subset of the data for
+illustration purposes.
+Thus the figure may not an exact replica of the one in the paper.
+To reproduce the results in the paper, please use the whole dataset
 ```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+cbfpalette <- c(
+  "#D55E00",
+  "#0072B2",
+  "#CC79A7",
+  "#009E73",
+  "#E69F00",
+  "#56B4E9",
+  "#F0E442"
+)
+plotidac <- c(' NPB','EBE','Binom')
 ```
-
-You can enable figure captions by `fig_caption: yes` in YAML:
-
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
-
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
-
-## More Examples
-
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
-
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
-```
-
-Also a quote using `>`:
-
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
