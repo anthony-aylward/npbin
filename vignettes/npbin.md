@@ -20,8 +20,8 @@ library(npbin)
 minimum_coverage <- 5 # minimum total coverage allowed
 n_cores <- 47 # the number of cores to be used, can ONLY be 1 if run on Windows.
 
-dt <- atac
-colnames(dt)
+dt.ct <- atac
+colnames(dt.ct)
 #>  [1] "chr"             "location"        "m"              
 #>  [4] "xm"              "winning.chip"    "motif"          
 #>  [7] "pval.mat.atSNP"  "pval.pat.atSNP"  "pval.rank.atSNP"
@@ -34,7 +34,6 @@ is used.
 
 ```r
 dt.ct <- dt.ct[1:2000, ]
-#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
 ```
 
 NPBin
@@ -48,7 +47,7 @@ pi_init <- hist(
   breaks = seq(0, 1, length.out = n_breaks + spline_order - 3),
   plot = FALSE
 )[["density"]] # initialized the weights using the histogram of p_hat
-#> Error in hist(dt.ct[, p_hat], breaks = seq(0, 1, length.out = n_breaks + : object 'dt.ct' not found
+#> Error in `[.data.frame`(dt.ct, , p_hat): object 'p_hat' not found
 ```
 
 estimate the overall model
@@ -64,7 +63,7 @@ overall_model_estimate <- emBinBspl(
   err.max = 1e-3,
   iter.max = 200
 )  
-#> Error in emBinBspl(dt.ct[, xm], dt.ct[, m], breaks = breaks, k = spline_order, : object 'dt.ct' not found
+#> Error in `[.data.frame`(dt.ct, , xm): object 'xm' not found
 ```
 
 estimate the null model
@@ -92,7 +91,7 @@ dt.ct[,
 ][,
   ranknp := rank(locfdrnp, ties.method = "max")
 ]
-#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
+#> Error in `:=`(fnp, null_model_estimate[["f"]]): could not find function ":="
 names(null_model_estimate)
 #> Error in eval(expr, envir, enclos): object 'null_model_estimate' not found
 ```
@@ -120,7 +119,7 @@ empirical_bayes_beta_hat <- ebBeta(
   err.max = 1e-4,
   ncores = n_cores
 )
-#> Error in emBspl(x, m, p, breaks = breaks, k = k, pi.init = pi.init, ncores = ncores, : object 'dt.ct' not found
+#> Error in `[.data.frame`(dt.ct, , m): object 'm' not found
 dt.ct[,
   fhat := empirical_bayes_beta_hat[["f"]]
 ][,
@@ -132,7 +131,7 @@ dt.ct[,
 ][,
   rankhat := rank(locfdrhat, ties.method = "max")
 ]
-#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
+#> Error in `:=`(fhat, empirical_bayes_beta_hat[["f"]]): could not find function ":="
 names(empirical_bayes_beta_hat)
 #> Error in eval(expr, envir, enclos): object 'empirical_bayes_beta_hat' not found
 ```
@@ -159,7 +158,7 @@ dt.ct[,
 ][,
   rankbin := rank(pvbin, ties.method = "max")
 ]
-#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
+#> Error in `:=`(pvbin, p_binomial): could not find function ":="
 ```
 
 Evaluate the results using motifs
@@ -168,14 +167,14 @@ number of potential TP defined based on motif
 
 ```r
 dt.ct[, sum(potential_TP)]
-#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
+#> Error in `[.data.frame`(dt.ct, , sum(potential_TP)): object 'potential_TP' not found
 ```
 
 number of potential FP defined based on motif
 
 ```r
 dt.ct[, sum(potential_FP)]
-#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
+#> Error in `[.data.frame`(dt.ct, , sum(potential_FP)): object 'potential_FP' not found
 ```
 
 find the number of TP and FP in top ranked SNPs
@@ -186,19 +185,19 @@ dt.ct[,
 ][,
   fpnp := rank2nhit(ranknp, potential_FP)
 ]
-#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
+#> Error in `:=`(tpnp, rank2nhit(ranknp, potential_TP)): could not find function ":="
 dt.ct[,
   tp_hat := rank2nhit(rankhat, potential_TP)
 ][,
   fp_hat := rank2nhit(rankhat, potential_FP)
 ]
-#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
+#> Error in `:=`(tp_hat, rank2nhit(rankhat, potential_TP)): could not find function ":="
 dt.ct[,
   tpbin := rank2nhit(rankbin, potential_TP)
 ][,
   fpbin := rank2nhit(rankbin, potential_FP)
 ]
-#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
+#> Error in `:=`(tpbin, rank2nhit(rankbin, potential_TP)): could not find function ":="
 ```
 
 plot the accuracy measure as in the main paper. 
