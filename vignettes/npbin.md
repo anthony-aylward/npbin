@@ -28,8 +28,10 @@ colnames(dt)
 #> [10] "winnig.motif"    "potential_TP"    "potential_FP"
 ```
 
-```
+
+```r
 dt.ct <- data.table(dt)[m >= minimum_coverage, ]
+#> Error in data.table(dt): could not find function "data.table"
 ```
 
 for illustration purpose, keep only the 2000 points, remove this line will
