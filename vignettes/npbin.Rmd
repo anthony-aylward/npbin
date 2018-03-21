@@ -20,6 +20,7 @@ We will analyze a subset of one of the sample dataset for illustration
 purposes.
 ```{r}
 library(npbin)
+library(data.table)
 
 minimum_coverage <- 5 # minimum total coverage allowed
 n_cores <- 47 # the number of cores to be used, can ONLY be 1 if run on Windows.
