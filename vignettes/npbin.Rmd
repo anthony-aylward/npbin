@@ -24,8 +24,12 @@ library(npbin)
 minimum_coverage <- 5 # minimum total coverage allowed
 n_cores <- 47 # the number of cores to be used, can ONLY be 1 if run on Windows.
 
-dt.ct <- atac
-colnames(dt.ct)
+dt <- atac
+colnames(dt)
+```
+
+```
+dt.ct <- data.table(dt)[m >= minimum_coverage, ]
 ```
 
 for illustration purpose, keep only the 2000 points, remove this line will
@@ -33,6 +37,8 @@ end up with analyzing the whole data set. It could be slow if only one core
 is used.
 ```{r}
 dt.ct <- dt.ct[1:2000, ]
+dt.ct[, p_hat:=xm / m]
+n <- nrow(dt.ct)
 ```
 
 NPBin
