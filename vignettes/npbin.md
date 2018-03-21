@@ -16,6 +16,11 @@ purposes.
 
 ```r
 library(npbin)
+library(data.table)
+#> data.table 1.10.4.3
+#>   The fastest way to learn (by data.table authors): https://www.datacamp.com/courses/data-analysis-the-data-table-way
+#>   Documentation: ?data.table, example(data.table) and browseVignettes("data.table")
+#>   Release notes, videos and slides: http://r-datatable.com
 
 minimum_coverage <- 5 # minimum total coverage allowed
 n_cores <- 47 # the number of cores to be used, can ONLY be 1 if run on Windows.
@@ -31,7 +36,6 @@ colnames(dt)
 
 ```r
 dt.ct <- data.table(dt)[m >= minimum_coverage, ]
-#> Error in data.table(dt): could not find function "data.table"
 ```
 
 for illustration purpose, keep only the 2000 points, remove this line will
@@ -40,11 +44,8 @@ is used.
 
 ```r
 dt.ct <- dt.ct[1:2000, ]
-#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
 dt.ct[, p_hat:=xm / m]
-#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
 n <- nrow(dt.ct)
-#> Error in nrow(dt.ct): object 'dt.ct' not found
 ```
 
 NPBin
@@ -58,7 +59,6 @@ pi_init <- hist(
   breaks = seq(0, 1, length.out = n_breaks + spline_order - 3),
   plot = FALSE
 )[["density"]] # initialized the weights using the histogram of p_hat
-#> Error in hist(dt.ct[, p_hat], breaks = seq(0, 1, length.out = n_breaks + : object 'dt.ct' not found
 ```
 
 estimate the overall model
@@ -74,7 +74,6 @@ overall_model_estimate <- emBinBspl(
   err.max = 1e-3,
   iter.max = 200
 )  
-#> Error in emBinBspl(dt.ct[, xm], dt.ct[, m], breaks = breaks, k = spline_order, : object 'dt.ct' not found
 ```
 
 estimate the null model
@@ -90,7 +89,6 @@ null_model_estimate <- estNull(
   ub = rep(log(1e4), 2),
   err.max = 1e-4
 )
-#> Error in estNull1(mod, pseq, ncores = ncores): object 'overall_model_estimate' not found
 dt.ct[,
   fnp := null_model_estimate[["f"]]
 ][,
@@ -102,15 +100,25 @@ dt.ct[,
 ][,
   ranknp := rank(locfdrnp, ties.method = "max")
 ]
-#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
 names(null_model_estimate)
-#> Error in eval(expr, envir, enclos): object 'null_model_estimate' not found
+#>  [1] "pi"               "post"             "bspl"            
+#>  [4] "dmtx"             "f"                "ll.all"          
+#>  [7] "err.all"          "convergence"      "controls"        
+#> [10] "coef.null"        "pi0"              "f0"              
+#> [13] "locfdr"           "convergence.null"
 ```
 
 
 ```r
 null_model_estimate$coef.null
-#> Error in eval(expr, envir, enclos): object 'null_model_estimate' not found
+#> $shape1
+#> [1] 13.41442
+#> 
+#> $shape2
+#> [1] 12.97
+#> 
+#> $pi0
+#> [1] 0.8604282
 ```
 
 Empirical Bayes test using p_hat
@@ -130,7 +138,6 @@ empirical_bayes_beta_hat <- ebBeta(
   err.max = 1e-4,
   ncores = n_cores
 )
-#> Error in emBspl(x, m, p, breaks = breaks, k = k, pi.init = pi.init, ncores = ncores, : object 'dt.ct' not found
 dt.ct[,
   fhat := empirical_bayes_beta_hat[["f"]]
 ][,
@@ -142,16 +149,25 @@ dt.ct[,
 ][,
   rankhat := rank(locfdrhat, ties.method = "max")
 ]
-#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
 names(empirical_bayes_beta_hat)
-#> Error in eval(expr, envir, enclos): object 'empirical_bayes_beta_hat' not found
+#>  [1] "pi"          "post"        "bspl"        "dmtx"        "binmtx"     
+#>  [6] "f"           "ll.all"      "err.all"     "convergence" "controls"   
+#> [11] "coef.null"   "f0"          "pi0"         "locfdr"      "locfdrnorm" 
+#> [16] "null"
 ```
 
 null parameters of EBE
 
 ```r
 empirical_bayes_beta_hat[["coef.null"]]
-#> Error in eval(expr, envir, enclos): object 'empirical_bayes_beta_hat' not found
+#> $shape1
+#> [1] 3.427515
+#> 
+#> $shape2
+#> [1] 3.341993
+#> 
+#> $pi0
+#> [1] 0.9883402
 ```
 
 Binomial test
@@ -161,7 +177,6 @@ p_binomial <- sapply(
   1:n,
   function(y) binom.test(dt.ct[y, xm], dt.ct[y, m])[["p.value"]]
 )
-#> Error in lapply(X = X, FUN = FUN, ...): object 'n' not found
 dt.ct[,
   pvbin := p_binomial
 ][,
@@ -169,7 +184,6 @@ dt.ct[,
 ][,
   rankbin := rank(pvbin, ties.method = "max")
 ]
-#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
 ```
 
 Evaluate the results using motifs
@@ -178,14 +192,14 @@ number of potential TP defined based on motif
 
 ```r
 dt.ct[, sum(potential_TP)]
-#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
+#> [1] 42
 ```
 
 number of potential FP defined based on motif
 
 ```r
 dt.ct[, sum(potential_FP)]
-#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
+#> [1] 2
 ```
 
 find the number of TP and FP in top ranked SNPs
@@ -196,19 +210,19 @@ dt.ct[,
 ][,
   fpnp := rank2nhit(ranknp, potential_FP)
 ]
-#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
+#> Error in rank2nhit(ranknp, potential_TP): could not find function "rank2nhit"
 dt.ct[,
   tp_hat := rank2nhit(rankhat, potential_TP)
 ][,
   fp_hat := rank2nhit(rankhat, potential_FP)
 ]
-#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
+#> Error in rank2nhit(rankhat, potential_TP): could not find function "rank2nhit"
 dt.ct[,
   tpbin := rank2nhit(rankbin, potential_TP)
 ][,
   fpbin := rank2nhit(rankbin, potential_FP)
 ]
-#> Error in eval(expr, envir, enclos): object 'dt.ct' not found
+#> Error in rank2nhit(rankbin, potential_TP): could not find function "rank2nhit"
 ```
 
 plot the accuracy measure as in the main paper. 
