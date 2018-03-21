@@ -24,8 +24,8 @@ library(npbin)
 minimum_coverage <- 5 # minimum total coverage allowed
 n_cores <- 47 # the number of cores to be used, can ONLY be 1 if run on Windows.
 
-dt <- atac
-colnames(dt)
+dt.ct <- atac
+colnames(dt.ct)
 ```
 
 for illustration purpose, keep only the 2000 points, remove this line will
