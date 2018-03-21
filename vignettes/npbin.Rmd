@@ -28,7 +28,7 @@ dt <- atac
 colnames(dt)
 ```
 
-```
+```{r}
 dt.ct <- data.table(dt)[m >= minimum_coverage, ]
 ```
 
