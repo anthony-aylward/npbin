@@ -144,5 +144,8 @@ npbin_preprocess_file <- function(file_path, minimum_coverage = 5) {
     ref_count_index = header_indices[["ref_count_index"]]
   )
   
-  convert_to_data_table(preprocessed_data_frame)
+  convert_to_data_table(
+      preprocessed_data_frame,
+      minimum_coverage = minimum_coverage
+  )
 }
