@@ -387,6 +387,8 @@ estNull1 <- function(
   bspl <- mod[["bspl"]]
   pi <- mod[["pi"]]
   drvbspl <- evBsplDrv(pseq, bspl, ncores = ncores)
+  print(drvbspl)
+  stop()
   df <- apply(drvbspl, 1, function(ii) sum(ii * pi))
   evbspl <- evBspl(pseq, bspl, ncores = ncores)
   fseq <- apply(evbspl, 1, function(ii) sum(ii * pi))
@@ -511,7 +513,6 @@ estNull  <- function(
   ub = rep(log(1e4),2)
 ) {
   prep <- estNull1(mod, pseq, ncores = ncores)
-  print(prep)
   estNull2(
     x,
     m,
