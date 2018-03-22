@@ -434,14 +434,6 @@ estNull2 <- function(
     m2p <- (ss - (m1p - m1p^2) * mi) / (n - mi)
     sc <- m1p^2 / m2p - 1
     init <- c(m1p * sc, (1 - m1p) * sc)
-    return(
-      list(
-        m1p = m1p,
-        m2p = m2p,
-        sc = sc,
-        init = init
-      )
-    )
   }
   fseq <- prep[["fseq"]]
   df <- prep[["df"]]
