@@ -433,7 +433,15 @@ estNull2 <- function(
     mi <- sum(1 / m)
     m2p <- (ss - (m1p - m1p^2) * mi) / (n - mi)
     sc <- m1p^2 / m2p - 1
+    print("m1p:")
+    print(m1p)
+    print("m2p:")
+    print(m2p)
+    print("sc:")
+    print(sc)
     init <- c(m1p * sc, (1 - m1p) * sc)
+    print("init:")
+    print(init)
   }
   fseq <- prep[["fseq"]]
   df <- prep[["df"]]
@@ -450,6 +458,8 @@ estNull2 <- function(
     ovec[is.na(ovec)] <- 0
     mean(ovec)
   }
+  print("init:")
+  print(init)
   optout <- nloptr(
     log(init),
     ell,
