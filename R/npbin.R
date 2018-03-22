@@ -550,7 +550,6 @@ locfdr2FDR <- function(locfdr) {
 #' @param r Vector of ranks
 #' @param id id
 #' @return vector indicating discoveries
-#' @seealso 
 rank2nhit <- function(r, id) {sapply(r, function(y) sum((r <= y) & id))}
 
 #' @title NPBin
