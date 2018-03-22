@@ -376,6 +376,7 @@ evBsplDrv <- function(p, bspl, ncores = 1) {
 #' @param pseq pseq
 #' @param ncores Number of cores to use
 #' @return List describing the model
+#' @export
 #' @seealso \code{\link{evBspl}}, \code{\link{evBsplDrv}}
 #' @family estNulls
 estNull1 <- function(
@@ -409,7 +410,8 @@ estNull1 <- function(
 #' @param pseq pseq
 #' @param lb Lower bounds
 #' @param ub Upper bounds
-#' @return mod 
+#' @return mod
+#' @export
 #' @seealso \code{\link{dbetabinom.vec}}
 #' @family estNulls
 estNull2 <- function(
