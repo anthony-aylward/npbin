@@ -30,6 +30,7 @@
 #' @param rate2 Second shape parameter
 #' @param log logical; if TRUE, probabilities p are given as log(p).
 #' @return vector describing the density
+#' @export
 #' @seealso \code{\link{estNull2}}, \code{\link{betaTrim_mle}}
 dbetabinom.vec <- function(x, m, rate1, rate2, log=TRUE) {
   n <- length(x)
