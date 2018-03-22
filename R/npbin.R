@@ -511,6 +511,7 @@ estNull  <- function(
   ub = rep(log(1e4),2)
 ) {
   prep <- estNull1(mod, pseq, ncores = ncores)
+  print(prep)
   estNull2(
     x,
     m,
