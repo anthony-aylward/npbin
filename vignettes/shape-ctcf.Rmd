@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 We will analyze a subset of one of the sample dataset for illustration
 purposes.
-```{r shape_import_packages}
+```{r shape_ctcf_import_packages}
 library(parallel)
 library(npbin)
 library(data.table)
@@ -30,21 +30,21 @@ dt <- ctcf
 colnames(dt)
 ```
 
-```{r Shape_initialize_data}
+```{r shape_ctcf_initialize_data}
 dt.ct <- data.table(dt)[m >= minimum_coverage, ]
 ```
 
 for illustration purpose, keep only the 2000 points, remove this line will
 end up with analyzing the whole data set. It could be slow if only one core
 is used.
-```{r shape_subset_data}
+```{r shape_ctcf_subset_data}
 dt.ct <- dt.ct[1:2000, ]
 dt.ct[, p_hat:=xm / m]
 n <- nrow(dt.ct)
 ```
 
 NPBin
-```{r shape_initialize_weights}
+```{r shape_ctcf_initialize_weights}
 n_breaks <- 11 # number of breaks
 spline_order <- 4 # order of splines
 breaks <- seq(0, 1, length.out = n_breaks)
@@ -57,7 +57,7 @@ pi_init <- initialize_weights(
 ```
 
 estimate the overall model
-```{r shape_estimate_overall}
+```{r shape_ctcf_estimate_overall}
 overall_model_estimate <- emBinBspl(
   dt.ct[, xm],
   dt.ct[, m],
@@ -71,7 +71,7 @@ overall_model_estimate <- emBinBspl(
 ```
 
 estimate the null model
-```{r shape_estimate_null}
+```{r shape_ctcf_estimate_null}
 null_model_estimate <- estNull(
   dt.ct[, xm],
   dt.ct[, m],
