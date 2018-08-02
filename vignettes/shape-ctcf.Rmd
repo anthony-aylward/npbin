@@ -82,8 +82,7 @@ null_model_estimate <- estNull(
   ub = rep(log(1e4), 2),
   err.max = 1e-4
 )
-names(null_model_estimate)
-```
+names(null_model_estimate)```
 
 ```{r}
 null_model_estimate$coef.null
