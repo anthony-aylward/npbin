@@ -2,10 +2,13 @@
 
 export(betaTrim_mle)
 export(convert_to_data_table)
+export(dbetabinom.vec)
 export(ebBeta)
 export(emBinBspl)
 export(emBspl)
 export(estNull)
+export(estNull1)
+export(estNull2)
 export(initialize_weights)
 export(locfdr2FDR)
 export(npbin)
