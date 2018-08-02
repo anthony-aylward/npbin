@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 We will analyze a subset of one of the sample dataset for illustration
 purposes.
 ```{r shape_import_packages}
+library(parallel)
 library(npbin)
 library(data.table)
 
