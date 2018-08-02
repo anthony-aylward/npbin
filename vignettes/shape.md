@@ -15,12 +15,12 @@ We will analyze a subset of one of the sample dataset for illustration
 purposes.
 
 ```r
+library(parallel)
 library(npbin)
 library(data.table)
 
 minimum_coverage <- 5 # minimum total coverage allowed
 n_cores <- detectCores() # the number of cores to be used, can ONLY be 1 if run on Windows.
-#> Error in detectCores(): could not find function "detectCores"
 
 dt <- atac
 colnames(dt)
@@ -74,7 +74,6 @@ overall_model_estimate <- emBinBspl(
   err.max = 1e-3,
   iter.max = 200
 )  
-#> Error in mclapply(1:(length(bspl) - 1), function(ii) bsplfun.updt(ii, : object 'n_cores' not found
 ```
 
 estimate the null model
@@ -90,13 +89,23 @@ null_model_estimate <- estNull(
   ub = rep(log(1e4), 2),
   err.max = 1e-4
 )
-#> Error in estNull1(mod, pseq, ncores = ncores): object 'overall_model_estimate' not found
 names(null_model_estimate)
-#> Error in eval(expr, envir, enclos): object 'null_model_estimate' not found
+#>  [1] "pi"               "post"             "bspl"            
+#>  [4] "dmtx"             "f"                "ll.all"          
+#>  [7] "err.all"          "convergence"      "controls"        
+#> [10] "coef.null"        "pi0"              "f0"              
+#> [13] "locfdr"           "convergence.null"
 ```
 
 
 ```r
 null_model_estimate$coef.null
-#> Error in eval(expr, envir, enclos): object 'null_model_estimate' not found
+#> $shape1
+#> [1] 13.41442
+#> 
+#> $shape2
+#> [1] 12.97
+#> 
+#> $pi0
+#> [1] 0.8604282
 ```
