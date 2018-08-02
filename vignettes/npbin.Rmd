@@ -47,11 +47,12 @@ NPBin
 n_breaks <- 11 # number of breaks
 spline_order <- 4 # order of splines
 breaks <- seq(0, 1, length.out = n_breaks)
-pi_init <- hist(
-  dt.ct[, p_hat],
-  breaks = seq(0, 1, length.out = n_breaks + spline_order - 3),
-  plot = FALSE
-)[["density"]] # initialized the weights using the histogram of p_hat
+pi_init <- initialize_weights(
+  dt.ct,
+  n_breaks = n_breaks,
+  spline_order = spline_order,
+  plot = TRUE
+) # initialized the weights using the histogram of p_hat
 ```
 
 estimate the overall model
