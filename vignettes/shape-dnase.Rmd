@@ -1,7 +1,7 @@
 ---
 title: "NPBin"
 author: "Anthony Aylward"
-date: "2018-08-02"
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -9,45 +9,42 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
 We will analyze a subset of one of the sample dataset for illustration
 purposes.
-
-```r
+```{r shape_import_packages}
+library(parallel)
 library(npbin)
 library(data.table)
 
 minimum_coverage <- 5 # minimum total coverage allowed
 n_cores <- detectCores() # the number of cores to be used, can ONLY be 1 if run on Windows.
-#> Error in detectCores(): could not find function "detectCores"
 
-dt <- atac
+dt <- dnase
 colnames(dt)
-#>  [1] "chr"             "location"        "m"              
-#>  [4] "xm"              "winning.chip"    "motif"          
-#>  [7] "pval.mat.atSNP"  "pval.pat.atSNP"  "pval.rank.atSNP"
-#> [10] "winnig.motif"    "potential_TP"    "potential_FP"
 ```
 
-
-```r
+```{r Shape_initialize_data}
 dt.ct <- data.table(dt)[m >= minimum_coverage, ]
 ```
 
 for illustration purpose, keep only the 2000 points, remove this line will
 end up with analyzing the whole data set. It could be slow if only one core
 is used.
-
-```r
+```{r shape_subset_data}
 dt.ct <- dt.ct[1:2000, ]
 dt.ct[, p_hat:=xm / m]
 n <- nrow(dt.ct)
 ```
 
 NPBin
-
-```r
+```{r shape_initialize_weights}
 n_breaks <- 11 # number of breaks
 spline_order <- 4 # order of splines
 breaks <- seq(0, 1, length.out = n_breaks)
@@ -59,11 +56,8 @@ pi_init <- initialize_weights(
 ) # initialized the weights using the histogram of p_hat
 ```
 
-![plot of chunk shape_initialize_weights](figure/shape_initialize_weights-1.png)
-
 estimate the overall model
-
-```r
+```{r shape_estimate_overall}
 overall_model_estimate <- emBinBspl(
   dt.ct[, xm],
   dt.ct[, m],
@@ -74,12 +68,10 @@ overall_model_estimate <- emBinBspl(
   err.max = 1e-3,
   iter.max = 200
 )  
-#> Error in mclapply(1:(length(bspl) - 1), function(ii) bsplfun.updt(ii, : object 'n_cores' not found
 ```
 
 estimate the null model
-
-```r
+```{r shape_estimate_null}
 null_model_estimate <- estNull(
   dt.ct[, xm],
   dt.ct[, m],
@@ -90,13 +82,9 @@ null_model_estimate <- estNull(
   ub = rep(log(1e4), 2),
   err.max = 1e-4
 )
-#> Error in estNull1(mod, pseq, ncores = ncores): object 'overall_model_estimate' not found
 names(null_model_estimate)
-#> Error in eval(expr, envir, enclos): object 'null_model_estimate' not found
 ```
 
-
-```r
+```{r}
 null_model_estimate$coef.null
-#> Error in eval(expr, envir, enclos): object 'null_model_estimate' not found
 ```
