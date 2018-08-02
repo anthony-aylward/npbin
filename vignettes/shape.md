@@ -57,8 +57,9 @@ pi_init <- initialize_weights(
   spline_order = spline_order,
   plot = TRUE
 ) # initialized the weights using the histogram of p_hat
-#> Error in initialize_weights(dt.ct, n_breaks = n_breaks, spline_order = spline_order, : unused argument (plot = TRUE)
 ```
+
+![plot of chunk shape_initialize_weights](figure/shape_initialize_weights-1.png)
 
 estimate the overall model
 
