@@ -23,7 +23,7 @@ library(npbin)
 library(data.table)
 
 minimum_coverage <- 5 # minimum total coverage allowed
-n_cores <- 47 # the number of cores to be used, can ONLY be 1 if run on Windows.
+n_cores <- detectCores() # the number of cores to be used, can ONLY be 1 if run on Windows.
 
 dt <- atac
 colnames(dt)
