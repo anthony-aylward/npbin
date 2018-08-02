@@ -4,7 +4,8 @@
 \alias{initialize_weights}
 \title{Initialize weights}
 \usage{
-initialize_weights(data_table, n_breaks, spline_order)
+initialize_weights(data_table, n_breaks = 11, spline_order = 4,
+  plot = FALSE)
 }
 \arguments{
 \item{data_table}{Input data table}
@@ -12,6 +13,8 @@ initialize_weights(data_table, n_breaks, spline_order)
 \item{n_breaks}{Number of breaks for the histogram}
 
 \item{spline_order}{Order of splines}
+
+\item{plot}{Logical. Produce a histogram plot if true}
 }
 \value{
 Histogram values
