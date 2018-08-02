@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 We will analyze a subset of one of the sample dataset for illustration
 purposes.
-```{r}
+```{r shape_import_packages}
 library(npbin)
 library(data.table)
 
@@ -29,14 +29,14 @@ dt <- atac
 colnames(dt)
 ```
 
-```{r}
+```{r Shape_initialize_data}
 dt.ct <- data.table(dt)[m >= minimum_coverage, ]
 ```
 
 for illustration purpose, keep only the 2000 points, remove this line will
 end up with analyzing the whole data set. It could be slow if only one core
 is used.
-```{r}
+```{r shape_subset_data}
 dt.ct <- dt.ct[1:2000, ]
 dt.ct[, p_hat:=xm / m]
 n <- nrow(dt.ct)

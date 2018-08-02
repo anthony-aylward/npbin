@@ -10,6 +10,7 @@
 #' @param data_table Input data table
 #' @param n_breaks Number of breaks for the histogram
 #' @param spline_order Order of splines
+#' @param plot Logical. Produce a histogram plot if true
 #' @return Histogram values
 #' @export
 #' @seealso \code{\link{npbin}}, \code{\link{emBspl}}, \code{\link{ebBeta}}
