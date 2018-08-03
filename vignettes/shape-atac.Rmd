@@ -105,24 +105,26 @@ Plot the estimated null distribution
 
 ```{r shape_atac_plot_null}
 pal <- color_palette()
+null_x <- 1:128 / 129
+null_y <- dbeta(
+  x,
+  null_model_estimate[["coef.null"]][["shape1"]],
+  null_model_estimate[["coef.null"]][["shape2"]]
+)
 hist(
   dt.ct[, p_hat],
   breaks = seq(0, 1, length.out = n_breaks + spline_order - 3),
   plot = TRUE,
-  frew = FALSE,
+  freq = FALSE,
   col = "lavenderblush",
   border = pal[["pink"]],
-  lty = 2
+  lty = 2,
+  ylim = c(0, max(null_y))
 )
 par(new = TRUE)
-x <- 1:128 / 129
 plot(
-  x,
-  dbeta(
-    x,
-    null_model_estimate[["coef.null"]][["shape1"]],
-    null_model_estimate[["coef.null"]][["shape2"]]
-  ),
+  null_x,
+  null_y,
   type = "l",
   lty = 2,
   lwd = 2,
