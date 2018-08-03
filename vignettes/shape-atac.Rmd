@@ -107,7 +107,7 @@ pal <- color_palette()
 hist(
   data_table[, p_hat],
   breaks = seq(0, 1, length.out = n_breaks + spline_order - 3),
-  plot = plot,
+  plot = TRUE,
   col = "lavenderblush",
   border = pal[["pink"]],
   lty = 2,
