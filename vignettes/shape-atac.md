@@ -130,17 +130,14 @@ Plot the estimated null distribution
 
 ```r
 pal <- color_palette()
-#> Error in color_palette(): could not find function "color_palette"
 hist(
   dt.ct[, p_hat],
   breaks = seq(0, 1, length.out = n_breaks + spline_order - 3),
   plot = TRUE,
   col = "lavenderblush",
   border = pal[["pink"]],
-  lty = 2,
-  lwd = 2
+  lty = 2
 )
-#> Error in rect(x$breaks[-nB], 0, x$breaks[-1L], y, col = col, border = border, : object 'pal' not found
 ```
 
 ![plot of chunk shape_atac_plot_null](figure/shape_atac_plot_null-1.png)
