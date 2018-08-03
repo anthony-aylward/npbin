@@ -82,8 +82,17 @@ null_model_estimate <- estNull(
   ub = rep(log(1e4), 2),
   err.max = 1e-4
 )
-names(null_model_estimate)```
+names(null_model_estimate)
+```
 
-```{r}
-null_model_estimate$coef.null
+```{r shape_ctcf_null_parameters}
+null_model_estimate[["coef.null"]]
+```
+
+```{r shape_ctcf_overdispersion}
+1 / sum(
+  null_model_estimate[["coef.null"]][["shape1"]],
+  null_model_estimate[["coef.null"]][["shape2"]],
+  1
+)
 ```

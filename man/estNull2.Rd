@@ -4,9 +4,9 @@
 \alias{estNull2}
 \title{Null model estimation}
 \usage{
-estNull2(x, m, mod, prep, init = NULL, iter.max = 200, err.max = 1e-06,
-  algorithm = "NLOPT_GN_DIRECT_L", pseq = (1:9999)/10000, lb = c(0, 0),
-  ub = rep(log(10000), 2))
+estNull2(x, m, mod, prep, init = NULL, iter.max = 200,
+  err.max = 1e-06, algorithm = "NLOPT_GN_DIRECT_L",
+  pseq = (1:9999)/10000, lb = c(0, 0), ub = rep(log(10000), 2))
 }
 \arguments{
 \item{x}{x}

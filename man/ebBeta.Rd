@@ -7,7 +7,8 @@
 ebBeta(x, m, p, breaks = seq(0, 1, length.out = 101), k = 4,
   pi.init = rep(1, length(breaks) + k - 4)/(length(breaks) + k - 4),
   pct0 = 0.45, init = NULL, iter.max = 200, err.max = 1e-05,
-  ncores = 1, lb.opt = c(0, 0, 0), ub.opt = c(log(10000), log(10000), 1))
+  ncores = 1, lb.opt = c(0, 0, 0), ub.opt = c(log(10000), log(10000),
+  1))
 }
 \arguments{
 \item{x}{x}

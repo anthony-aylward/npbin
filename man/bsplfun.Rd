@@ -4,8 +4,8 @@
 \alias{bsplfun}
 \title{Create B-spline.}
 \usage{
-bsplfun(xrange = c(0, 1), breaks = seq(xrange[1], xrange[2], length.out =
-  100), k = 4, ncores = 1)
+bsplfun(xrange = c(0, 1), breaks = seq(xrange[1], xrange[2], length.out
+  = 100), k = 4, ncores = 1)
 }
 \arguments{
 \item{xrange}{Support of the spline}

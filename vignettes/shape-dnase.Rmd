@@ -85,6 +85,14 @@ null_model_estimate <- estNull(
 names(null_model_estimate)
 ```
 
-```{r}
-null_model_estimate$coef.null
+```{r shape_dnase_null_parameters}
+null_model_estimate[["coef.null"]]
+```
+
+```{r shape_dnase_overdispersion}
+1 / sum(
+  null_model_estimate[["coef.null"]][["shape1"]],
+  null_model_estimate[["coef.null"]][["shape2"]],
+  1
+)
 ```

@@ -4,9 +4,9 @@
 \alias{betaTrim_mle}
 \title{Efron null model}
 \usage{
-betaTrim_mle(x, m, p, pct0 = 0.25, init = c(1, 1, 0.5), iter.max = 200,
-  err.max = 1e-06, lb.opt = c(0, 0, 0), ub.opt = c(log(10000), log(10000),
-  1))
+betaTrim_mle(x, m, p, pct0 = 0.25, init = c(1, 1, 0.5),
+  iter.max = 200, err.max = 1e-06, lb.opt = c(0, 0, 0),
+  ub.opt = c(log(10000), log(10000), 1))
 }
 \arguments{
 \item{x}{x}
