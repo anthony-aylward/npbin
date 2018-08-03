@@ -134,21 +134,25 @@ Plot the estimated null distribution
 
 ```r
 pal <- color_palette()
-barplot(
-  pi_init,
+null_x <- 1:128 / 129
+null_y <- dbeta(
+  null_x,
+  null_model_estimate[["coef.null"]][["shape1"]],
+  null_model_estimate[["coef.null"]][["shape2"]]
+)
+hist(
+  dt.ct[, p_hat],
+  plot = TRUE,
+  freq = FALSE,
   col = "lavenderblush",
   border = pal[["pink"]],
-  lty = 2
+  lty = 2,
+  ylim = c(0, max(null_y))
 )
 par(new = TRUE)
-x <- 1:128 / 129
 plot(
-  x,
-  dbeta(
-    x,
-    null_model_estimate[["coef.null"]][["shape1"]],
-    null_model_estimate[["coef.null"]][["shape2"]]
-  ),
+  null_x,
+  null_y,
   type = "l",
   lty = 2,
   lwd = 2,
