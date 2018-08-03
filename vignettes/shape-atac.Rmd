@@ -110,7 +110,6 @@ hist(
   plot = TRUE,
   col = "lavenderblush",
   border = pal[["pink"]],
-  lty = 2,
-  lwd = 2
+  lty = 2
 )
 ```
