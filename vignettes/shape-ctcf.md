@@ -59,7 +59,7 @@ pi_init <- initialize_weights(
 ) # initialized the weights using the histogram of p_hat
 ```
 
-![plot of chunk shape_initialize_weights](figure/shape_initialize_weights-1.png)
+![plot of chunk shape_ctcf_initialize_weights](figure/shape_ctcf_initialize_weights-1.png)
 
 estimate the overall model
 
