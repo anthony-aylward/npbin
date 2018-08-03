@@ -107,7 +107,7 @@ Plot the estimated null distribution
 pal <- color_palette()
 null_x <- 1:128 / 129
 null_y <- dbeta(
-  x,
+  null_x,
   null_model_estimate[["coef.null"]][["shape1"]],
   null_model_estimate[["coef.null"]][["shape2"]]
 )
