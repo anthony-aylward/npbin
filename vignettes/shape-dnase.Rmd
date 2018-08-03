@@ -89,6 +89,8 @@ names(null_model_estimate)
 null_model_estimate[["coef.null"]]
 ```
 
+Calculate the [overdispersion/correlation parameter](https://en.wikipedia.org/wiki/Beta-binomial_distribution#Moments_and_properties)
+
 ```{r shape_dnase_overdispersion}
 1 / sum(
   null_model_estimate[["coef.null"]][["shape1"]],
