@@ -105,8 +105,11 @@ Plot the estimated null distribution
 
 ```{r shape_atac_plot_null}
 pal <- color_palette()
-barplot(
-  pi_init,
+hist(
+  dt.ct[, p_hat],
+  breaks = seq(0, 1, length.out = n_breaks + spline_order - 3),
+  plot = TRUE,
+  frew = FALSE,
   col = "lavenderblush",
   border = pal[["pink"]],
   lty = 2
