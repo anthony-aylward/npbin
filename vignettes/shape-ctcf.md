@@ -1,7 +1,7 @@
 ---
 title: "NPBin"
 author: "Anthony Aylward"
-date: "2018-08-02"
+date: "2018-08-03"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -89,11 +89,33 @@ null_model_estimate <- estNull(
   ub = rep(log(1e4), 2),
   err.max = 1e-4
 )
-names(null_model_estimate)```
-#> Error: attempt to use zero-length variable name
+names(null_model_estimate)
+#>  [1] "pi"               "post"             "bspl"            
+#>  [4] "dmtx"             "f"                "ll.all"          
+#>  [7] "err.all"          "convergence"      "controls"        
+#> [10] "coef.null"        "pi0"              "f0"              
+#> [13] "locfdr"           "convergence.null"
 ```
 
+
 ```r
-null_model_estimate$coef.null
-#> Error in eval(expr, envir, enclos): object 'null_model_estimate' not found
+null_model_estimate[["coef.null"]]
+#> $shape1
+#> [1] 37.53662
+#> 
+#> $shape2
+#> [1] 37.30897
+#> 
+#> $pi0
+#> [1] 0.8983954
+```
+
+
+```r
+1 / sum(
+  null_model_estimate[["coef.null"]][["shape1"]],
+  null_model_estimate[["coef.null"]][["shape2"]],
+  1
+)
+#> [1] 0.01318468
 ```

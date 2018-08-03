@@ -1,7 +1,7 @@
 ---
 title: "NPBin"
 author: "Anthony Aylward"
-date: "2018-08-02"
+date: "2018-08-03"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -99,7 +99,7 @@ names(null_model_estimate)
 
 
 ```r
-null_model_estimate$coef.null
+null_model_estimate[["coef.null"]]
 #> $shape1
 #> [1] 15.30666
 #> 
@@ -108,4 +108,14 @@ null_model_estimate$coef.null
 #> 
 #> $pi0
 #> [1] 0.7672429
+```
+
+
+```r
+1 / sum(
+  null_model_estimate[["coef.null"]][["shape1"]],
+  null_model_estimate[["coef.null"]][["shape2"]],
+  1
+)
+#> [1] 0.0318257
 ```
