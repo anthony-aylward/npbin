@@ -113,7 +113,6 @@ null_y <- dbeta(
 )
 hist(
   dt.ct[, p_hat],
-  breaks = seq(0, 1, length.out = n_breaks + spline_order - 3),
   plot = TRUE,
   freq = FALSE,
   col = "lavenderblush",
