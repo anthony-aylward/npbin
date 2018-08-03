@@ -18,6 +18,10 @@ purposes.
 library(parallel)
 library(npbin)
 library(data.table)
+library(VGAM)
+#> Loading required package: methods
+#> Loading required package: stats4
+#> Loading required package: splines
 
 minimum_coverage <- 5 # minimum total coverage allowed
 n_cores <- detectCores() # the number of cores to be used, can ONLY be 1 if run on Windows.
@@ -137,6 +141,25 @@ hist(
   col = "lavenderblush",
   border = pal[["pink"]],
   lty = 2
+)
+par(new = TRUE)
+x <- 1:128 / 129
+plot(
+  x,
+  dbeta(
+    x,
+    null_model_estimate[["coef.null"]][["shape1"]],
+    null_model_estimate[["coef.null"]][["shape2"]]
+  ),
+  type = "l",
+  lty = 2,
+  lwd = 2,
+  col = pal[["blue"]],
+  bty = "n",
+  ylab = "",
+  xlab = "",
+  yaxt = "n",
+  xaxt = "n"
 )
 ```
 
