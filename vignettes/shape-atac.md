@@ -73,7 +73,10 @@ overall_model_estimate <- emBinBspl(
   ncores = n_cores,
   err.max = 1e-3,
   iter.max = 200
-)  
+)
+names(overall_model_estimate)
+#> [1] "pi"          "post"        "bspl"        "dmtx"        "f"          
+#> [6] "ll.all"      "err.all"     "convergence" "controls"
 ```
 
 estimate the null model
@@ -110,6 +113,8 @@ null_model_estimate[["coef.null"]]
 #> [1] 0.8604282
 ```
 
+Calculate the [overdispersion/correlation parameter](https://en.wikipedia.org/wiki/Beta-binomial_distribution#Moments_and_properties)
+
 
 ```r
 1 / sum(
@@ -118,4 +123,22 @@ null_model_estimate[["coef.null"]]
   1
 )
 #> [1] 0.0365171
+```
+
+Plot the estimated null distribution
+
+
+```r
+pal <- color_palette()
+#> Error in color_palette(): could not find function "color_palette"
+hist(
+  data_table[, p_hat],
+  breaks = seq(0, 1, length.out = n_breaks + spline_order - 3),
+  plot = plot,
+  col = "lavenderblush",
+  border = pal[["pink"]],
+  lty = 2,
+  lwd = 2
+)
+#> Error in hist(data_table[, p_hat], breaks = seq(0, 1, length.out = n_breaks + : object 'data_table' not found
 ```
