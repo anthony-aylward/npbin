@@ -2,6 +2,7 @@
 
 export(betaTrim_mle)
 export(beta_variance)
+export(color_palette)
 export(convert_to_data_table)
 export(dbetabinom.vec)
 export(ebBeta)

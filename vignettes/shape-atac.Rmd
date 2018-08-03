@@ -67,7 +67,8 @@ overall_model_estimate <- emBinBspl(
   ncores = n_cores,
   err.max = 1e-3,
   iter.max = 200
-)  
+)
+names(overall_model_estimate)
 ```
 
 estimate the null model
