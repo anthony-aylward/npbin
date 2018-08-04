@@ -4,15 +4,17 @@
 \alias{plot_estimated_null}
 \title{Plot an estimated null distribution}
 \usage{
-plot_estimated_null(p_hat, shape1, shape2)
+plot_estimated_null(p_hat, shape1_shape2, shape3_shape4 = NULL)
 }
 \arguments{
 \item{p_hat}{Numeric. Vector of observed ref allele proportions.}
 
-\item{shape1}{Numeric. First shape parameter of the null distribution.}
+\item{shape1_shape2}{Numeric. Shape parameters of the first null
+distribution.}
 
-\item{shape2}{Numeric. Second shape parameter of the null distribution.}
+\item{shape3_shape4}{Numeric. Shape parameters of the second null
+distribution.}
 }
 \description{
-Plot an estimated null distribution
+optionally superimpose two null distributions
 }
