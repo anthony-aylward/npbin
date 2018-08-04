@@ -48,7 +48,8 @@ plot_estimated_null <- function(p_hat, shape1_shape2, shape3_shape4 = NULL) {
     ylab = "",
     xlab = "",
     yaxt = "n",
-    xaxt = "n"
+    xaxt = "n",
+    ylim = c(0, max(c(null_y1, null_y2)))
   )
   if (!is.null(shape3_shape4)) {
     par(new = TRUE)
@@ -63,7 +64,8 @@ plot_estimated_null <- function(p_hat, shape1_shape2, shape3_shape4 = NULL) {
       ylab = "",
       xlab = "",
       yaxt = "n",
-      xaxt = "n"
+      xaxt = "n",
+      ylim = c(0, max(c(null_y1, null_y2)))
     )
   }
 }
