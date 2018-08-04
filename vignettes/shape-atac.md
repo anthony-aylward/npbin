@@ -133,35 +133,10 @@ Plot the estimated null distribution
 
 
 ```r
-pal <- color_palette()
-null_x <- 1:128 / 129
-null_y <- dbeta(
-  null_x,
+plot_estimated_null(
+  dt.ct[, p_hat],
   null_model_estimate[["coef.null"]][["shape1"]],
   null_model_estimate[["coef.null"]][["shape2"]]
-)
-hist(
-  dt.ct[, p_hat],
-  plot = TRUE,
-  freq = FALSE,
-  col = "lavenderblush",
-  border = pal[["pink"]],
-  lty = 2,
-  ylim = c(0, max(null_y))
-)
-par(new = TRUE)
-plot(
-  null_x,
-  null_y,
-  type = "l",
-  lty = 2,
-  lwd = 2,
-  col = pal[["blue"]],
-  bty = "n",
-  ylab = "",
-  xlab = "",
-  yaxt = "n",
-  xaxt = "n"
 )
 ```
 
