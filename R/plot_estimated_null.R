@@ -54,7 +54,7 @@ plot_estimated_null <- function(p_hat, shape1_shape2, shape3_shape4 = NULL) {
     par(new = TRUE)
     plot(
       null_x,
-      null_y1,
+      null_y2,
       type = "l",
       lty = 2,
       lwd = 2,
