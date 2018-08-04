@@ -73,7 +73,10 @@ overall_model_estimate <- emBinBspl(
   ncores = n_cores,
   err.max = 1e-3,
   iter.max = 200
-)  
+)
+names(overall_model_estimate)
+#> [1] "pi"          "post"        "bspl"        "dmtx"        "f"          
+#> [6] "ll.all"      "err.all"     "convergence" "controls"
 ```
 
 estimate the null model
@@ -110,6 +113,8 @@ null_model_estimate[["coef.null"]]
 #> [1] 0.8983954
 ```
 
+Calculate the [overdispersion/correlation parameter](https://en.wikipedia.org/wiki/Beta-binomial_distribution#Moments_and_properties)
+
 
 ```r
 1 / sum(
@@ -119,3 +124,16 @@ null_model_estimate[["coef.null"]]
 )
 #> [1] 0.01318468
 ```
+
+Plot the estimated null distribution
+
+
+```r
+plot_estimated_null(
+  dt.ct[, p_hat],
+  null_model_estimate[["coef.null"]][["shape1"]],
+  null_model_estimate[["coef.null"]][["shape2"]]
+)
+```
+
+![plot of chunk shape_ctcf_plot_null](figure/shape_ctcf_plot_null-1.png)

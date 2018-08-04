@@ -102,7 +102,7 @@ Calculate the [overdispersion/correlation parameter](https://en.wikipedia.org/wi
 
 Plot the estimated null distribution
 
-```{r shape_ctcf_plot_null}
+```{r shape_dnase_plot_null}
 plot_estimated_null(
   dt.ct[, p_hat],
   null_model_estimate[["coef.null"]][["shape1"]],
