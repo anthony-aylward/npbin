@@ -131,8 +131,10 @@ Plot the estimated null distribution
 ```r
 plot_estimated_null(
   dt.ct[, p_hat],
-  null_model_estimate[["coef.null"]][["shape1"]],
-  null_model_estimate[["coef.null"]][["shape2"]]
+  shape1_shape2 = c(
+    null_model_estimate[["coef.null"]][["shape1"]],
+    null_model_estimate[["coef.null"]][["shape2"]]
+  )
 )
 ```
 
