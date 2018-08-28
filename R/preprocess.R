@@ -1,5 +1,5 @@
 #===============================================================================
-# preprocess_counts.R
+# npbin_preprocess_counts.R
 #===============================================================================
 
 # Preprocess allele count data
@@ -52,7 +52,7 @@ get_header_indices <- function(header) {
 #'
 #' @param logical_val A logical value
 #' @return "P" if input was TRUE, "M" if it was FALSE.
-#' @seealso \code{\link{preprocess_counts}}
+#' @seealso \code{\link{npbin_preprocess_counts}}
 logical_to_winning_chip <- function(logical_val) {
   if (logical_val) {'P'} else {'M'}
 }
@@ -73,7 +73,7 @@ logical_to_winning_chip <- function(logical_val) {
 #' @export
 #' @seealso \code{\link{logical_to_winning_chip}},
 #'   \code{\link{npbin_preprocess_file}}
-preprocess_counts <- function(
+npbin_preprocess_counts <- function(
   data_frame,
   chr_index = 1,
   location_index = 2,
@@ -110,18 +110,18 @@ convert_to_data_table <- function(data_frame, minimum_coverage = 5) {
 
 #' Preprocess allele count data, handling a header if necessary.
 #'
-#' This function wraps \code{preprocess_counts} with header handling.
+#' This function wraps \code{npbin_preprocess_counts} with header handling.
 #'
 #' Checks if the input data includes a header by checking column types of
 #' the input data frame. If a header is present, the indices of the required
-#' fields are noted and used with \code{preprocess_counts}. Finally, the data
-#' frame is converted to a data table.
+#' fields are noted and used with \code{npbin_preprocess_counts}. Finally, the
+#' data frame is converted to a data table.
 #'
 #' @param data_frame A data frame containing required fields for NPBin analysis
 #' @return A data frame formatted for NPBin analysis
 #' @export
-#' @seealso \code{\link{get_header_indices}}, \code{\link{preprocess_counts}},
-#'   \code{\link{convert_to_data_table}}
+#' @seealso \code{\link{get_header_indices}},
+#'   \code{\link{npbin_preprocess_counts}}, \code{\link{convert_to_data_table}}
 npbin_preprocess_file <- function(file_path, minimum_coverage = 5) {
   header_indices <- list(
     chr_index = 1,
@@ -136,7 +136,7 @@ npbin_preprocess_file <- function(file_path, minimum_coverage = 5) {
     header_indices <- get_header_indices(names(data_frame))
   }
   
-  preprocessed_data_frame <- preprocess_counts(
+  preprocessed_data_frame <- npbin_preprocess_counts(
     data_frame,
     chr_index = header_indices[["chr_index"]],
     location_index = header_indices[["location_index"]],
