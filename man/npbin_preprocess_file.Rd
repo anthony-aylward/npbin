@@ -13,15 +13,15 @@ npbin_preprocess_file(file_path, minimum_coverage = 5)
 A data frame formatted for NPBin analysis
 }
 \description{
-This function wraps \code{preprocess_counts} with header handling.
+This function wraps \code{npbin_preprocess_counts} with header handling.
 }
 \details{
 Checks if the input data includes a header by checking column types of
 the input data frame. If a header is present, the indices of the required
-fields are noted and used with \code{preprocess_counts}. Finally, the data
-frame is converted to a data table.
+fields are noted and used with \code{npbin_preprocess_counts}. Finally, the
+data frame is converted to a data table.
 }
 \seealso{
-\code{\link{get_header_indices}}, \code{\link{preprocess_counts}},
-  \code{\link{convert_to_data_table}}
+\code{\link{get_header_indices}},
+  \code{\link{npbin_preprocess_counts}}, \code{\link{convert_to_data_table}}
 }
