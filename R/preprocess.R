@@ -54,7 +54,7 @@ get_header_indices <- function(header) {
 #' @return "P" if input was TRUE, "M" if it was FALSE.
 #' @seealso \code{\link{npbin_preprocess_counts}}
 logical_to_winning_chip <- function(logical_val) {
-  if (logical_val) {'P'} else {'M'}
+  if (is.na(logical_val)) NA else if (logical_val) 'P' else 'M'
 }
 
 #' Preprocess allele count data
