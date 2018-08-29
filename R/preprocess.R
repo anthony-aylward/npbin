@@ -145,7 +145,7 @@ npbin_preprocess_file <- function(file_path, minimum_coverage = 5) {
   )
   
   convert_to_data_table(
-      preprocessed_data_frame,
-      minimum_coverage = minimum_coverage
+    preprocessed_data_frame,
+    minimum_coverage = minimum_coverage
   )
 }
