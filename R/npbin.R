@@ -562,12 +562,12 @@ rank2nhit <- function(r, id) {sapply(r, function(y) sum((r <= y) & id))}
 #' @param n_breaks Number of spline breaks
 #' @param spline_order Spline order
 #' @param pi_init Initial weights
-#' @param cores Number of cores to use
+#' @param ncores Number of cores to use
 #' @return Data table containing model information
 #' @export
 #' @seealso \code{\link{initialize_weights}}, \code{\link{emBinBspl}},
 #'   \code{\link{estNull}}
-npbin <- function(dt.ct, n_breaks, spline_order, pi_init, cores) {
+npbin <- function(dt.ct, n_breaks, spline_order, pi_init, ncores) {
   n <- nrow(dt.ct)
   breaks <- seq(0, 1, length.out = n_breaks)
   
@@ -578,7 +578,7 @@ npbin <- function(dt.ct, n_breaks, spline_order, pi_init, cores) {
     breaks = breaks,
     k = spline_order,
     pi.init = pi_init,
-    ncores = cores,
+    ncores = ncores,
     err.max = 1e-3,
     iter.max = 200
   )  
@@ -590,7 +590,7 @@ npbin <- function(dt.ct, n_breaks, spline_order, pi_init, cores) {
     overall_model_estimate,
     init = NULL,
     iter.max = 200,
-    ncores = cores,
+    ncores = ncores,
     ub = rep(log(1e4), 2),
     err.max = 1e-4
   )
