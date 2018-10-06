@@ -4,7 +4,7 @@
 \alias{npbin}
 \title{NPBin}
 \usage{
-npbin(dt.ct, n_breaks, spline_order, pi_init, n_cores)
+npbin(dt.ct, n_breaks, spline_order, pi_init, ncores)
 }
 \arguments{
 \item{dt.ct}{Data table containing allele counts}
@@ -15,7 +15,7 @@ npbin(dt.ct, n_breaks, spline_order, pi_init, n_cores)
 
 \item{pi_init}{Initial weights}
 
-\item{n_cores}{Number of cores to use}
+\item{ncores}{Number of cores to use}
 }
 \value{
 Data table containing model information
