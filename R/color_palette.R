@@ -6,7 +6,7 @@
 #'
 #' @return a list representing the color palette
 #' @export
-color_palette <- function() {
+npbin_color_palette <- function() {
   list(
     orange = "#D55E00",
     blue = "#0072B2",

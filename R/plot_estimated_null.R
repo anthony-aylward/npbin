@@ -13,7 +13,7 @@
 #'   distribution.
 #' @export
 plot_estimated_null <- function(p_hat, shape1_shape2, shape3_shape4 = NULL) {
-  pal <- color_palette()
+  pal <- npbin_color_palette()
   null_x <- 1:128 / 129
   shape1 = shape1_shape2[[1]]
   shape2 = shape1_shape2[[2]]
